@@ -1193,6 +1193,8 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
 
+        
+        /*
         try {
             for (Habitacion var : habitaciones) {
                 if (var.obtenerCodigo().equals(txtCodigoHab.getText()) || txtCodigoHab.getText().equals("")) {
@@ -1220,6 +1222,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
                     break;
             }
              */
+        /*
             FileWriter fr = new FileWriter("C:\\Users\\alang\\Documents\\NetBeansProjects\\PROYECTO HOSPITAL\\Hospital\\Pacientes.txt");
             fr.write("Codigo:" + txtCodigoHab.getText() + ";Piso:" + 2 + ";Tipo:" + jComboBox9.getItemAt(jComboBox9.getSelectedIndex()) + "\n");
             fr.close();
@@ -1234,12 +1237,19 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
                     model.insertRow(model.getRowCount(), new Object[]{elementos[0], elementos[1], elementos[2], elementos[3]});
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
             jLabel28.setForeground(Color.RED);
             jLabel28.setText("Datos no válidos");
         }
+        */
+        Habitacion habitacion = new Habitacion();
+        habitacion.setearCodigo(txtCodigoHab.getText());
+        habitacion.setearDisponibilidad(true);  // se setea automaticamente en true porque no hay campo que reciba la disp
+        habitacion.setearTipo(jComboBox9.getSelectedItem().toString());
+        habitacion.setearPiso(Integer.parseInt(jComboBox8.getSelectedItem().toString()));
+        habitacion.guardar();
+        
     }//GEN-LAST:event_jButton7ActionPerformed
 
     /**

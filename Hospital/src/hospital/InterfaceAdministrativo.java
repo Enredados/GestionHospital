@@ -1158,11 +1158,15 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
             jLabel25.setForeground(Color.GREEN);
             jLabel25.setText("Se ha ingresado el médico correctamente");
             if (jComboBox6.getSelectedIndex() == 0) {
-                medicos.add(new Medico(txtIDAdmin1.getText(), txtNombreAdmin1.getText(), Integer.parseInt(txtEdadAdmin1.getText()), 'M', jComboBox7.getActionCommand(), txtContrasenaAdmin1.getText()));
+                Medico aux = new Medico();
+                aux = new Medico(txtIDAdmin1.getText(), txtNombreAdmin1.getText(), Integer.parseInt(txtEdadAdmin1.getText()), 'M', jComboBox7.getActionCommand(), txtContrasenaAdmin1.getText());
+                aux.guardar();
                 jComboBox4.addItem("Dr. " + txtNombreAdmin1.getText());
             } else {
-                medicos.add(new Medico(txtIDAdmin1.getText(), txtNombreAdmin1.getText(), Integer.parseInt(txtEdadAdmin1.getText()), 'F', jComboBox7.getActionCommand(), txtContrasenaAdmin1.getText()));
-                jComboBox4.addItem("Dra. " + txtNombreAdmin1.getText());
+                 Medico aux = new Medico();
+                aux = new Medico(txtIDAdmin1.getText(), txtNombreAdmin1.getText(), Integer.parseInt(txtEdadAdmin1.getText()), 'F', jComboBox7.getActionCommand(), txtContrasenaAdmin1.getText());
+                aux.guardar();
+                jComboBox4.addItem("Dr. " + txtNombreAdmin1.getText());
             }
             jLabel25.setVisible(true);
         } catch (Exception e) {

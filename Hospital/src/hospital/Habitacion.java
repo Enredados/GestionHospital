@@ -5,7 +5,14 @@
  */
 package hospital;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.RandomAccess;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,6 +25,12 @@ public class Habitacion {
     private boolean disponibilidad = true;
     private int piso;
     private String tipo;
+    private String pacienteID;
+
+    // constantes
+    private final int LONG_CODIGO = 5;
+    private final int LONG_TIPO = 10;
+    private final int LONG_PACIENTE = 5;
 
     public Habitacion(String codigo, int piso, String tipo, Paciente paciente) {
         this.codigo = codigo;
@@ -66,6 +79,63 @@ public class Habitacion {
     }
 
     public String obtenerInformacion() {
-        return "Código:" + codigo + ";Piso:" + piso + ";Tipo:" + tipo+ ";Paciente:"+paciente;
+        return "Código:" + codigo + ";Piso:" + piso + ";Tipo:" + tipo + ";Paciente:" + paciente;
+    }
+
+    public void guardar() {
+        String raiz = System.getProperty("user.dir");
+
+        try {
+            File arch = new File(raiz + "\\habitaciones.dat");
+            RandomAccessFile rand = new RandomAccessFile(arch, "rw");
+            darFormato();
+
+            if (rand.length() == 0) {
+                rand.writeUTF(codigo);
+                rand.writeInt(piso);
+                rand.writeUTF(tipo);
+                rand.writeUTF(pacienteID);
+                rand.writeBoolean(disponibilidad);
+                rand.close();
+            } else {
+                rand.seek(rand.length());
+                rand.writeUTF(codigo);
+                rand.writeInt(piso);
+                rand.writeUTF(tipo);
+                rand.writeUTF(pacienteID);
+                rand.writeBoolean(disponibilidad);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Habitacion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Habitacion.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+
+    public void darFormato() {
+        // codigo con formato char de 5 (10 bytes)
+        if (codigo.length() > LONG_CODIGO) {
+            codigo = codigo.substring(0, LONG_CODIGO - 1);
+        } else {
+            for (int i = codigo.length(); i < LONG_CODIGO; i++) {
+                codigo += " ";
+            }
+        }
+        // tipo con formato char de 5 (10 bytes)
+        if (tipo.length() > LONG_TIPO) {
+            tipo = tipo.substring(0, LONG_TIPO - 1);
+        } else {
+            for (int i = tipo.length(); i < LONG_TIPO; i++) {
+                tipo += " ";
+            }
+        }
+        // pacienteID con formato char de 5 (10 bytes)
+        if (pacienteID.length() > LONG_PACIENTE) {
+            pacienteID = pacienteID.substring(0, LONG_PACIENTE - 1);
+        } else {
+            for (int i = pacienteID.length(); i < LONG_PACIENTE; i++) {
+                pacienteID += " ";
+            }
+        }
     }
 }

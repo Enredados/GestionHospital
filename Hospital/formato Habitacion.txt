@@ -1,0 +1,5 @@
+codigo:	char 5
+piso: int
+tipo: char 10
+paciente: tiene que ser un objeto
+disponibilidad: boolean

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 /**
  *
  * @author alang
+ * Comentario de prueba
  */
 public class Medico extends Persona {
 

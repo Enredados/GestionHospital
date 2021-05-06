@@ -1119,9 +1119,13 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
             jLabel19.setForeground(Color.GREEN);
             jLabel19.setText("Se ha ingresado el administrativo correctamente");
             if (jComboBox5.getSelectedIndex() == 0) {
-                administrativos.add(new Administrativo(txtIDAdmin.getText(), txtNombreAdmin.getText(), Integer.parseInt(txtEdadAdmin.getText()), 'M', txtContrasenaAdmin.getText()));
+                Administrativo auxAdmin = new Administrativo();
+                auxAdmin = new Administrativo(txtIDAdmin.getText(), txtNombreAdmin.getText(), Integer.parseInt(txtEdadAdmin.getText()), 'M', txtContrasenaAdmin.getText());
+                auxAdmin.guardar();
             } else {
-                administrativos.add(new Administrativo(txtIDAdmin.getText(), txtNombreAdmin.getText(), Integer.parseInt(txtEdadAdmin.getText()), 'F', txtContrasenaAdmin.getText()));
+                Administrativo auxAdmin = new Administrativo();
+                auxAdmin = new Administrativo(txtIDAdmin.getText(), txtNombreAdmin.getText(), Integer.parseInt(txtEdadAdmin.getText()), 'F', txtContrasenaAdmin.getText());
+                auxAdmin.guardar();
             }
             jLabel19.setVisible(true);
         } catch (Exception e) {

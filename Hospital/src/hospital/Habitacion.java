@@ -123,7 +123,7 @@ public class Habitacion {
         String raiz = System.getProperty("user.dir");
 
         try {
-            File arch = new File(raiz + "\\habitaciones.dat");
+            File arch = new File(raiz + "\\HABITACIONES.dat");
             RandomAccessFile rand = new RandomAccessFile(arch, "rw");
             darFormato();
 

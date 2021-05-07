@@ -148,10 +148,12 @@ public class Paciente extends Persona {
                 archivo.writeUTF(habitacion.obtenerCodigo());
                 archivo.writeUTF(medico.obtenerId());
                 archivo.writeUTF(fechaIngreso.toString());
+                System.out.println(fechaIngreso.toString().length());
+
                 if (fechaSalida != null) {
                     archivo.writeUTF(fechaSalida.toString());
                 } else {
-                    archivo.writeUTF("null");
+                    archivo.writeUTF("null                   ");
                 }
                 archivo.close();
             } else {
@@ -162,10 +164,11 @@ public class Paciente extends Persona {
                 archivo.writeUTF(habitacion.obtenerCodigo());
                 archivo.writeUTF(medico.obtenerId());
                 archivo.writeUTF(fechaIngreso.toString());
+                System.out.println(fechaIngreso.toString());
                 if (fechaSalida != null) {
                     archivo.writeUTF(fechaSalida.toString());
                 } else {
-                    archivo.writeUTF("null");
+                    archivo.writeUTF("null                   ");
                 }
 
                 archivo.close();

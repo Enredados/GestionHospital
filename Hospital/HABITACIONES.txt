@@ -1,4 +1,4 @@
-Código:h001;Piso:1;Tipo:General;Paciente:null
+Código:h001;Piso:1;Tipo:General;Paciente:hospital.Paciente@71ed9a2f
 Código:h002;Piso:2;Tipo:VIP;Paciente:null
 Código:h003;Piso:3;Tipo:General;Paciente:null
 Código:h004;Piso:5;Tipo:VIP;Paciente:null

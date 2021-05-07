@@ -5,6 +5,9 @@
  */
 package hospital;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -88,9 +91,9 @@ public class Paciente extends Persona {
 
     public String obtenerInformacion() {
         return "ID:" + id + ";Nombre:" + nombre + ";Edad:" + edad
-                + ";Género:" + genero + ";Habitación:" + habitacion.obtenerCodigo()+ ";Médico:"+medico.obtenerId()+ ";FechaIngreso:" + String.valueOf(fechaIngreso);
+                + ";Género:" + genero + ";Habitación:" + habitacion.obtenerCodigo() + ";Médico:" + medico.obtenerId() + ";FechaIngreso:" + String.valueOf(fechaIngreso);
     }
-    
+
     public void darFormato() {
         if (id.length() < 5) {
             for (int i = id.length() - 1; i < 5; i++) {
@@ -109,13 +112,67 @@ public class Paciente extends Persona {
         }
 
         String aux = medico.obtenerId();
-        /*if (medico.obtenerId().length() < 20) {
-            for (int i = medico.obtenerId().length() - 1; i < 20; i++) {
+        if (medico.obtenerId().length() < 5) {
+            for (int i = medico.obtenerId().length() - 1; i < 5; i++) {
                 aux += "";
             }
+            medico.setearNombre(aux);
         } else {
-            especialidad = especialidad.substring(0, 20);
-        }*/
+            medico.setearNombre(medico.obtenerId().substring(0, 5));
+        }
+        aux = habitacion.obtenerCodigo();
+        if (habitacion.obtenerCodigo().length() < 5) {
+            for (int i = habitacion.obtenerCodigo().length() - 1; i < 5; i++) {
+                aux += "";
+            }
+            habitacion.setearCodigo(aux);
+        } else {
+            habitacion.setearCodigo(habitacion.obtenerCodigo().substring(0, 5));
+        }
+    }
+
+    public void guardar() {
+        String raiz = System.getProperty("user.dir");
+        try {
+            darFormato();
+            File arch = new File(raiz + "\\PACIENTES.dat");
+            System.out.println(raiz);
+            RandomAccessFile archivo = new RandomAccessFile(arch, "rw");
+
+            if (archivo.length() != 0) {
+                archivo.seek(archivo.length());
+                archivo.writeUTF(id);
+                archivo.writeUTF(nombre);
+                archivo.writeInt(edad);
+                archivo.writeChar(genero);
+                archivo.writeUTF(habitacion.obtenerCodigo());
+                archivo.writeUTF(medico.obtenerId());
+                archivo.writeUTF(fechaIngreso.toString());
+                if (fechaSalida != null) {
+                    archivo.writeUTF(fechaSalida.toString());
+                } else {
+                    archivo.writeUTF("null");
+                }
+                archivo.close();
+            } else {
+                archivo.writeUTF(id);
+                archivo.writeUTF(nombre);
+                archivo.writeInt(edad);
+                archivo.writeChar(genero);
+                archivo.writeUTF(habitacion.obtenerCodigo());
+                archivo.writeUTF(medico.obtenerId());
+                archivo.writeUTF(fechaIngreso.toString());
+                if (fechaSalida != null) {
+                    archivo.writeUTF(fechaSalida.toString());
+                } else {
+                    archivo.writeUTF("null");
+                }
+
+                archivo.close();
+            }
+        } catch (IOException e) {
+            System.out.println("error en el ingreso");
+        }
     }
 
 }

@@ -1061,10 +1061,11 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
 
             if (habitaciones.get(aux).obtenerDisponibilidad()) {
                 Paciente nuevoPaciente = new Paciente(id, nombre, edad, genero, medico, habitaciones.get(aux), LocalDateTime.now());
-                FileWriter fr = new FileWriter("C:\\Users\\alang\\Documents\\NetBeansProjects\\PROYECTO HOSPITAL\\Hospital\\Pacientes.txt");
-                fr.write(nuevoPaciente.obtenerDatosString());
-                fr.close();
-
+                //FileWriter fr = new FileWriter("C:\\Users\\alang\\Documents\\NetBeansProjects\\PROYECTO HOSPITAL\\Hospital\\Pacientes.txt");
+                //fr.write(nuevoPaciente.obtenerDatosString());
+                //fr.close();
+                nuevoPaciente.guardar();
+                                    
                 pacientes.add(nuevoPaciente);
                 habitaciones.get(aux).setearPaciente(nuevoPaciente);
                 lblHab.setText("");

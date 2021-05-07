@@ -34,6 +34,10 @@ public class Persona {
         return this.nombre;
     }
     
+    public void setearNombre(String nombre){
+        this.nombre = nombre;
+    }
+    
     public int obtenerEdad(){
         return this.edad;
     }

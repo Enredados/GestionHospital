@@ -3,5 +3,3 @@ ID:m02;Nombre:Dr. Strange;Edad:25;Género:M;Especialidad:Alergología;Contraseñ
 ID:m03;Nombre:Dr. Ácula;Edad:24;Género:M;Especialidad:Pediatría;Contraseña:003
 ID:m04;Nombre:Dra. Polo;Edad:27;Género:F;Especialidad:Dermatología;Contraseña:004
 ID:m05;Nombre:Dr. Strange;Edad:29;Género:M;Especialidad:Pediatría;Contraseña:005
-ID:234;Nombre:adf;Edad:23;Género:M;Especialidad:comboBoxChanged;Contraseña:234
-ID:1021;Nombre:Cabrera;Edad:18;Género:F;Especialidad:comboBoxChanged;Contraseña:1021

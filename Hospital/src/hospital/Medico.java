@@ -105,7 +105,7 @@ public class Medico extends Persona {
                 archivo.writeUTF(id);
                 archivo.writeUTF(nombre);
                 archivo.writeInt(edad);
-                archivo.writeChar(edad);
+                archivo.writeChar(genero);
                 archivo.writeUTF(especialidad);
                 archivo.writeUTF(contrasena);
                 archivo.close();
@@ -113,7 +113,7 @@ public class Medico extends Persona {
                 archivo.writeUTF(id);
                 archivo.writeUTF(nombre);
                 archivo.writeInt(edad);
-                archivo.writeChar(edad);
+                archivo.writeChar(genero);
                 archivo.writeUTF(especialidad);
                 archivo.writeUTF(contrasena);
                 archivo.close();

@@ -1152,7 +1152,6 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-
         try {
             for (Medico var : medicos) {
                 if (var.obtenerId().equals(txtIDAdmin1.getText())) {
@@ -1163,12 +1162,12 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
             jLabel25.setText("Se ha ingresado el médico correctamente");
             if (jComboBox6.getSelectedIndex() == 0) {
                 Medico aux = new Medico();
-                aux = new Medico(txtIDAdmin1.getText(), txtNombreAdmin1.getText(), Integer.parseInt(txtEdadAdmin1.getText()), 'M', jComboBox7.getActionCommand(), txtContrasenaAdmin1.getText());
+                aux = new Medico(txtIDAdmin1.getText(), txtNombreAdmin1.getText(), Integer.parseInt(txtEdadAdmin1.getText()), 'M', jComboBox7.getItemAt(jComboBox7.getSelectedIndex()), txtContrasenaAdmin1.getText());
                 aux.guardar();
                 jComboBox4.addItem("Dr. " + txtNombreAdmin1.getText());
             } else {
                  Medico aux = new Medico();
-                aux = new Medico(txtIDAdmin1.getText(), txtNombreAdmin1.getText(), Integer.parseInt(txtEdadAdmin1.getText()), 'F', jComboBox7.getActionCommand(), txtContrasenaAdmin1.getText());
+                aux = new Medico(txtIDAdmin1.getText(), txtNombreAdmin1.getText(), Integer.parseInt(txtEdadAdmin1.getText()), 'F', jComboBox7.getItemAt(jComboBox7.getSelectedIndex()), txtContrasenaAdmin1.getText());
                 aux.guardar();
                 jComboBox4.addItem("Dr. " + txtNombreAdmin1.getText());
             }
@@ -1179,7 +1178,6 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
             jLabel25.setVisible(true);
 
         }
-
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed

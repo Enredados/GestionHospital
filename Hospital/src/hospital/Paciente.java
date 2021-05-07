@@ -90,5 +90,32 @@ public class Paciente extends Persona {
         return "ID:" + id + ";Nombre:" + nombre + ";Edad:" + edad
                 + ";Género:" + genero + ";Habitación:" + habitacion.obtenerCodigo()+ ";Médico:"+medico.obtenerId()+ ";FechaIngreso:" + String.valueOf(fechaIngreso);
     }
+    
+    public void darFormato() {
+        if (id.length() < 5) {
+            for (int i = id.length() - 1; i < 5; i++) {
+                id += "";
+            }
+        } else {
+            id = id.substring(0, 5);
+        }
+
+        if (nombre.length() < 20) {
+            for (int i = nombre.length() - 1; i < 20; i++) {
+                nombre += "";
+            }
+        } else {
+            nombre = nombre.substring(0, 20);
+        }
+
+        String aux = medico.obtenerId();
+        /*if (medico.obtenerId().length() < 20) {
+            for (int i = medico.obtenerId().length() - 1; i < 20; i++) {
+                aux += "";
+            }
+        } else {
+            especialidad = especialidad.substring(0, 20);
+        }*/
+    }
 
 }

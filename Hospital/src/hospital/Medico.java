@@ -61,7 +61,7 @@ public class Medico extends Persona {
     public void darFormato() {
         if (id.length() < 5) {
             for (int i = id.length() - 1; i < 5; i++) {
-                id += "";
+                id += " ";
             }
         } else {
             id = id.substring(0, 5);
@@ -69,7 +69,7 @@ public class Medico extends Persona {
 
         if (nombre.length() < 20) {
             for (int i = nombre.length() - 1; i < 20; i++) {
-                nombre += "";
+                nombre += " ";
             }
         } else {
             nombre = nombre.substring(0, 20);
@@ -77,7 +77,7 @@ public class Medico extends Persona {
 
         if (especialidad.length() < 20) {
             for (int i = especialidad.length() - 1; i < 20; i++) {
-                especialidad += "";
+                especialidad += " ";
             }
         } else {
             especialidad = especialidad.substring(0, 20);
@@ -85,7 +85,7 @@ public class Medico extends Persona {
 
         if (contrasena.length() < 10) {
             for (int i = contrasena.length() - 1; i < 10; i++) {
-                contrasena += "";
+                contrasena += " ";
             }
         } else {
             contrasena = contrasena.substring(0, 10);

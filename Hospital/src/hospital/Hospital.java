@@ -78,7 +78,6 @@ public class Hospital {
             e.printStackTrace();
         }
 
-        System.out.println("ADMINS:");
         // LEER ARCHIVO ADMINISTRATIVOS
         try {
             Scanner myReader = new Scanner(archivoAdmins);
@@ -138,7 +137,6 @@ public class Hospital {
             e.printStackTrace();
         }
 
-        System.out.println("PACIENTES:");
         // LEER ARCHIVO PACIENTES
         try {
             Scanner myReader = new Scanner(archivoPacientes);
@@ -149,10 +147,7 @@ public class Hospital {
                 datos = pcomas[i].split(":");
                 Medico medAux = null;
                 for (Medico med : medicos) {
-                    System.out.println("med acutal: " + med.obtenerId());
-                    System.out.println("pac acutal: " + pcomas[5].split(":")[1]);
                     if (pcomas[5].split(":")[1].equals(med.obtenerId())) {
-                        System.out.println("encontrado: " + med.obtenerId() + "\n");
                         medAux = med;
                         break;
                     }

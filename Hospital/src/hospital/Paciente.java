@@ -97,7 +97,7 @@ public class Paciente extends Persona {
     public void darFormato() {
         if (id.length() < 5) {
             for (int i = id.length() - 1; i < 5; i++) {
-                id += "";
+                id += " ";
             }
         } else {
             id = id.substring(0, 5);
@@ -105,7 +105,7 @@ public class Paciente extends Persona {
 
         if (nombre.length() < 20) {
             for (int i = nombre.length() - 1; i < 20; i++) {
-                nombre += "";
+                nombre += " ";
             }
         } else {
             nombre = nombre.substring(0, 20);
@@ -114,7 +114,7 @@ public class Paciente extends Persona {
         String aux = medico.obtenerId();
         if (medico.obtenerId().length() < 5) {
             for (int i = medico.obtenerId().length() - 1; i < 5; i++) {
-                aux += "";
+                aux += " ";
             }
             medico.setearNombre(aux);
         } else {
@@ -123,7 +123,7 @@ public class Paciente extends Persona {
         aux = habitacion.obtenerCodigo();
         if (habitacion.obtenerCodigo().length() < 5) {
             for (int i = habitacion.obtenerCodigo().length() - 1; i < 5; i++) {
-                aux += "";
+                aux += " ";
             }
             habitacion.setearCodigo(aux);
         } else {

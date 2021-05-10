@@ -6,12 +6,17 @@
 package hospital;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -72,6 +77,10 @@ public class InterfaceMedico extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        ta_impresionEstad_medico = new javax.swing.JTextPane();
+        bt_estadistica_medico = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -227,6 +236,41 @@ public class InterfaceMedico extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Editar Paciente", jPanel3);
 
+        jScrollPane4.setViewportView(ta_impresionEstad_medico);
+
+        bt_estadistica_medico.setText("Ver estadísticas");
+        bt_estadistica_medico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_estadistica_medicoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(207, 207, 207)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(63, 63, 63)
+                        .addComponent(bt_estadistica_medico)))
+                .addContainerGap(247, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(bt_estadistica_medico)
+                .addGap(28, 28, 28)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(48, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Estadísticas", jPanel4);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -380,6 +424,38 @@ public class InterfaceMedico extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void bt_estadistica_medicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_estadistica_medicoActionPerformed
+        try {
+            String raiz = System.getProperty("user.dir");
+            File arch = new File(raiz + "\\PACIENTES.dat");
+            RandomAccessFile archivo = new RandomAccessFile(arch, "r");
+            
+            int[] edades = new int[10];
+            final int REGISTRO_LENGTH = 168;
+            long cantidadRegistros = archivo.length() / REGISTRO_LENGTH;
+             int posEdad = 50;
+            
+            archivo.seek(posEdad);
+            for(int i = 0; i < cantidadRegistros; i++){
+                edades[(int) archivo.readInt()/10]++;
+                posEdad += 4;       // los 4 bytes que lee de la edad
+                posEdad += 164;     // los 168 - 4 bytes para leer la edad del siguiente registro
+                archivo.seek(posEdad);
+            }
+            System.out.println("EDADES:");
+            for(int n : edades){
+                System.out.println(n);
+            }
+            
+            
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(InterfaceMedico.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(InterfaceMedico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_bt_estadistica_medicoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -417,6 +493,7 @@ public class InterfaceMedico extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField JID;
+    private javax.swing.JButton bt_estadistica_medico;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -427,12 +504,15 @@ public class InterfaceMedico extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextArea jTextDiagnostico;
+    private javax.swing.JTextPane ta_impresionEstad_medico;
     // End of variables declaration//GEN-END:variables
 }

@@ -136,22 +136,20 @@ public class Paciente extends Persona {
         try {
             darFormato();
             File arch = new File(raiz + "\\PACIENTES.dat");
-            System.out.println(raiz);
             RandomAccessFile archivo = new RandomAccessFile(arch, "rw");
 
             if (archivo.length() != 0) {
                 archivo.seek(archivo.length());
-                archivo.writeUTF(id);
-                archivo.writeUTF(nombre);
-                archivo.writeInt(edad);
-                archivo.writeChar(genero);
-                archivo.writeUTF(habitacion.obtenerCodigo());
-                archivo.writeUTF(medico.obtenerId());
-                archivo.writeUTF(fechaIngreso.toString());
-                System.out.println(fechaIngreso.toString().length());
+                archivo.writeUTF(id); //10 Bytes
+                archivo.writeUTF(nombre); //40 Bytes
+                archivo.writeInt(edad); //4 Bytes
+                archivo.writeChar(genero); //2 Bytes
+                archivo.writeUTF(habitacion.obtenerCodigo()); //10 Bytes
+                archivo.writeUTF(medico.obtenerId()); //10 Bytes
+                archivo.writeUTF(fechaIngreso.toString()); //46 Bytes
 
                 if (fechaSalida != null) {
-                    archivo.writeUTF(fechaSalida.toString());
+                    archivo.writeUTF(fechaSalida.toString()); //46 Bytes
                 } else {
                     archivo.writeUTF("null                   ");
                 }

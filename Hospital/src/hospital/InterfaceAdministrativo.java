@@ -8,9 +8,11 @@ package hospital;
 import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -40,7 +42,6 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         pacientestxt = new File("C:\\Users\\alang\\Documents\\NetBeansProjects\\PROYECTO HOSPITAL\\Hospital\\Pacientes.txt");
-
     }
 
     public InterfaceAdministrativo(ArrayList<Medico> medicos, ArrayList<Administrativo> administrativos, ArrayList<Paciente> pacientes, ArrayList<Habitacion> habitaciones) {
@@ -64,7 +65,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
         this.habitaciones = habitaciones;
         pacientestxt = new File("C:\\Users\\alang\\Documents\\NetBeansProjects\\PROYECTO HOSPITAL\\Hospital\\Pacientes.txt");
 
-        for(Medico med : medicos){
+        for (Medico med : medicos) {
             jComboBox4.addItem(med.obtenerNombre());
         }
     }
@@ -421,11 +422,11 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Paciente", "Edad", "Género", "Habitación", "Médico"
+                "ID", "Paciente", "Edad", "Género", "Habitación", "Médico", "FechaIngreso", "FechaSalida"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -500,8 +501,10 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
                         .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 779, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jButton2)))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -860,18 +863,21 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(btnSalir)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSalir))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 940, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 940, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 680, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSalir)
                 .addContainerGap(157, Short.MAX_VALUE))
         );
@@ -894,14 +900,44 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        
+         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
+        String raiz = System.getProperty("user.dir");
+        
+       try {
+            String id;
+            String nombre;
+            int edad;
+            char genero;
+            String habCodigo;
+            String medID;
+            String fechaIngreso;
+            String fechaSalida;
+            long tamRegistro = 168;
+            long cregistros = 0;
+            File arch = new File(raiz + "\\PACIENTES.dat");
+            RandomAccessFile archivo = new RandomAccessFile(arch, "rw");
+            cregistros = archivo.length();
+           System.out.println(cregistros);
+            
+            for (int r = 0; r < cregistros; r++) {
+                archivo.seek(cregistros);
+                
+                id = archivo.readUTF();
+                nombre = archivo.readUTF();
+                edad = archivo.readInt();
+                genero = archivo.readChar();
+                habCodigo = archivo.readUTF();
+                medID = archivo.readUTF();
+                fechaIngreso = archivo.readUTF();
+                fechaSalida = archivo.readUTF();
+                model.insertRow(model.getRowCount(), new Object[]{id, nombre, edad, genero, habCodigo, medID, fechaIngreso, fechaSalida});
 
-        for (Paciente paciente : pacientes) {
-            if (txtID.getText().equals(paciente.obtenerId())) {
-                String[] elementos = paciente.obtenerDatosPaciente();
-                model.insertRow(model.getRowCount(), new Object[]{elementos[0], elementos[1], elementos[2], elementos[3], elementos[4]});
+                System.out.println();
             }
+
+        } catch (Exception e) {
 
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -936,11 +972,47 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
         // TODO add your handling code here:          
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
+        String raiz = System.getProperty("user.dir");
 
-        for (Paciente paciente : pacientes) {
+        try {
+            String id;
+            String nombre;
+            int edad;
+            char genero;
+            String habCodigo;
+            String medID;
+            String fechaIngreso;
+            String fechaSalida;
+            long tamRegistro = 168;
+            long cregistros = 0;
+            File arch = new File(raiz + "\\PACIENTES.dat");
+            RandomAccessFile archivo = new RandomAccessFile(arch, "rw");
+            cregistros = archivo.length()/tamRegistro;
+
+            for (int r = 0; r < cregistros; r++) {
+                id = archivo.readUTF();
+                nombre = archivo.readUTF();
+                edad = archivo.readInt();
+                genero = archivo.readChar();
+                habCodigo = archivo.readUTF();
+                medID = archivo.readUTF();
+                fechaIngreso = archivo.readUTF();
+                fechaSalida = archivo.readUTF();
+                model.insertRow(model.getRowCount(), new Object[]{id, nombre, edad, genero, habCodigo, medID, fechaIngreso, fechaSalida});
+
+                System.out.println();
+            }
+
+        } catch (Exception e) {
+
+        }
+        /*
+      for (Paciente paciente : pacientes) {
             String[] elementos = paciente.obtenerDatosPaciente();
             model.insertRow(model.getRowCount(), new Object[]{elementos[0], elementos[1], elementos[2], elementos[3], elementos[4], paciente.obtenerMedico().obtenerNombre()});
         }
+         */
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -1022,7 +1094,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_txtNuevoActionPerformed
-    
+
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
@@ -1065,7 +1137,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
                 //fr.write(nuevoPaciente.obtenerDatosString());
                 //fr.close();
                 nuevoPaciente.guardar();
-                                    
+
                 pacientes.add(nuevoPaciente);
                 habitaciones.get(aux).setearPaciente(nuevoPaciente);
                 lblHab.setText("");
@@ -1167,7 +1239,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
                 aux.guardar();
                 jComboBox4.addItem("Dr. " + txtNombreAdmin1.getText());
             } else {
-                 Medico aux = new Medico();
+                Medico aux = new Medico();
                 aux = new Medico(txtIDAdmin1.getText(), txtNombreAdmin1.getText(), Integer.parseInt(txtEdadAdmin1.getText()), 'F', jComboBox7.getItemAt(jComboBox7.getSelectedIndex()), txtContrasenaAdmin1.getText());
                 aux.guardar();
                 jComboBox4.addItem("Dr. " + txtNombreAdmin1.getText());
@@ -1200,7 +1272,6 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
 
-        
         /*
         try {
             for (Habitacion var : habitaciones) {
@@ -1228,8 +1299,8 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
                     habitaciones.add(new Habitacion(txtCodigoHab.getText(), 5, jComboBox9.getItemAt(jComboBox9.getSelectedIndex())));
                     break;
             }
-             */
-        /*
+         */
+ /*
             FileWriter fr = new FileWriter("C:\\Users\\alang\\Documents\\NetBeansProjects\\PROYECTO HOSPITAL\\Hospital\\Pacientes.txt");
             fr.write("Codigo:" + txtCodigoHab.getText() + ";Piso:" + 2 + ";Tipo:" + jComboBox9.getItemAt(jComboBox9.getSelectedIndex()) + "\n");
             fr.close();
@@ -1249,14 +1320,14 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
             jLabel28.setForeground(Color.RED);
             jLabel28.setText("Datos no válidos");
         }
-        */
+         */
         Habitacion habitacion = new Habitacion();
         habitacion.setearCodigo(txtCodigoHab.getText());
         habitacion.setearDisponibilidad(true);  // se setea automaticamente en true porque no hay campo que reciba la disp
         habitacion.setearTipo(jComboBox9.getSelectedItem().toString());
         habitacion.setearPiso(Integer.parseInt(jComboBox8.getSelectedItem().toString()));
         habitacion.guardar();
-        
+
     }//GEN-LAST:event_jButton7ActionPerformed
 
     /**

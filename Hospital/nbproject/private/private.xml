@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< Updated upstream
             <file>file:/C:/Users/alang/Documents/NetBeansProjects/Poo/Random/GestionHospital/Hospital/src/hospital/Login.java</file>
             <file>file:/C:/Users/alang/Documents/NetBeansProjects/Poo/Random/GestionHospital/Hospital/src/hospital/InterfaceMedico.java</file>
             <file>file:/C:/Users/alang/Documents/NetBeansProjects/Poo/Random/GestionHospital/Hospital/src/hospital/Persona.java</file>
@@ -11,6 +12,10 @@
             <file>file:/C:/Users/alang/Documents/NetBeansProjects/Poo/Random/GestionHospital/Hospital/src/hospital/Habitacion.java</file>
             <file>file:/C:/Users/alang/Documents/NetBeansProjects/Poo/Random/GestionHospital/Hospital/src/hospital/Medico.java</file>
             <file>file:/C:/Users/alang/Documents/NetBeansProjects/Poo/Random/GestionHospital/Hospital/src/hospital/Hospital.java</file>
+=======
+            <file>file:/C:/Users/ASUS/source/repos/JAVA_projects/ENREDADOS/GestionHospital/Hospital/src/hospital/InterfaceAdministrativo.java</file>
+            <file>file:/C:/Users/ASUS/source/repos/JAVA_projects/ENREDADOS/GestionHospital/Hospital/src/hospital/Habitacion.java</file>
+>>>>>>> Stashed changes
         </group>
     </open-files>
 </project-private>

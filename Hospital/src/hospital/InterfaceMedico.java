@@ -437,6 +437,7 @@ public class InterfaceMedico extends javax.swing.JFrame {
             System.out.println(archivo.length());
             archivo.seek(posEdad);
             for(int i = 0; i < cantidadRegistros; i++){
+                System.out.println(archivo.length());
                 edades[(int) archivo.readInt()/10]++;
                 posEdad += 4;       // los 4 bytes que lee de la edad
                 posEdad += 95;     // los 99 - 4 bytes para leer la edad del siguiente registro

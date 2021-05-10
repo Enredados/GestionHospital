@@ -431,23 +431,21 @@ public class InterfaceMedico extends javax.swing.JFrame {
             RandomAccessFile archivo = new RandomAccessFile(arch, "r");
             
             int[] edades = new int[10];
-            final int REGISTRO_LENGTH = 168;
+            final int REGISTRO_LENGTH = 99;
             long cantidadRegistros = archivo.length() / REGISTRO_LENGTH;
-             int posEdad = 50;
-            
+             int posEdad = 29;
+            System.out.println(archivo.length());
             archivo.seek(posEdad);
             for(int i = 0; i < cantidadRegistros; i++){
                 edades[(int) archivo.readInt()/10]++;
                 posEdad += 4;       // los 4 bytes que lee de la edad
-                posEdad += 164;     // los 168 - 4 bytes para leer la edad del siguiente registro
+                posEdad += 95;     // los 99 - 4 bytes para leer la edad del siguiente registro
                 archivo.seek(posEdad);
             }
             System.out.println("EDADES:");
             for(int n : edades){
                 System.out.println(n);
             }
-            
-            
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(InterfaceMedico.class.getName()).log(Level.SEVERE, null, ex);

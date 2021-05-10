@@ -155,6 +155,7 @@ public class Paciente extends Persona {
                 } else {
                     archivo.writeUTF("null                   ");
                 }
+                System.out.println("archivo length: " + archivo.length());
                 archivo.close();
         } catch (IOException e) {
             System.out.println("error en el ingreso");

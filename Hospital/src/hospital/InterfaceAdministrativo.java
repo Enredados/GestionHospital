@@ -983,7 +983,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
             String medID;
             String fechaIngreso;
             String fechaSalida;
-            long tamRegistro = 168;
+            long tamRegistro = 99;
             long cregistros = 0;
             File arch = new File(raiz + "\\PACIENTES.dat");
             RandomAccessFile archivo = new RandomAccessFile(arch, "rw");

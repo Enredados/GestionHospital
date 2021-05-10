@@ -57,6 +57,10 @@ public class Medico extends Persona {
                 + ";Género:" + genero + ";Especialidad:" + especialidad
                 + ";Contraseña:" + contrasena;
     }
+    
+    public void setearID(String id){
+        this.id = id;
+    }
 
     public void darFormato() {
         if (id.length() < 5) {

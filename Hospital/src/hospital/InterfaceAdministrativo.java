@@ -21,6 +21,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -116,6 +121,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        bt_estadistica_medico = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
         txtNombreAdmin1 = new javax.swing.JTextField();
@@ -482,6 +488,14 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
             jTable2.getColumnModel().getColumn(0).setResizable(false);
         }
 
+        bt_estadistica_medico.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        bt_estadistica_medico.setText("Ver estadísticas");
+        bt_estadistica_medico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_estadistica_medicoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -489,7 +503,10 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(28, 28, 28)
+                        .addComponent(bt_estadistica_medico))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 779, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -509,10 +526,12 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addGap(12, 12, 12)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(bt_estadistica_medico))
+                .addGap(43, 43, 43)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(57, 57, 57)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1316,6 +1335,48 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void bt_estadistica_medicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_estadistica_medicoActionPerformed
+         try {
+            String raiz = System.getProperty("user.dir");
+            File arch = new File(raiz + "\\PACIENTES.dat");
+            RandomAccessFile archivo = new RandomAccessFile(arch, "r");
+
+            // Lectura de los registros en el archivo .dat
+            int[] edades = new int[10];
+            final int REGISTRO_LENGTH = 99;
+            long cantidadRegistros = archivo.length() / REGISTRO_LENGTH;
+            int posEdad = 29;
+            System.out.println(archivo.length());
+            archivo.seek(posEdad);
+            for (int i = 0; i < cantidadRegistros; i++) {
+                System.out.println(archivo.length());
+                edades[(int) archivo.readInt() / 10]++;
+                posEdad += 4;       // los 4 bytes que lee de la edad
+                posEdad += 95;     // los 99 - 4 bytes para leer la edad del siguiente registro
+                archivo.seek(posEdad);
+            }
+
+            // crear chart e ingresar datos
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+            for(int i = 0; i < edades.length; i++){
+                dataset.setValue(edades[i], "No. Pacientes", String.valueOf(i*10) + " - " + String.valueOf(i*10+10));
+            }
+
+            JFreeChart chart = ChartFactory.createBarChart("Pacientes ingresados por rango de edades", "Rango de edades", "No. pacientes ingresados", dataset);
+            CategoryPlot p = chart.getCategoryPlot();
+            p.setRangeGridlinePaint(Color.black);
+            ChartFrame frame = new ChartFrame("Diagrama de barras", chart);
+            frame.setVisible(true);
+            frame.setLocationRelativeTo(null);
+            frame.setSize(800, pacientes.size()*60);
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(InterfaceMedico.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(InterfaceMedico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_bt_estadistica_medicoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1356,6 +1417,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bt_estadistica_medico;
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

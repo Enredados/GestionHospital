@@ -146,18 +146,18 @@ public class Paciente extends Persona {
                 archivo.writeUTF(nombre); //22 Bytes
                 archivo.writeInt(edad); //4 Bytes
                 archivo.writeChar(genero); //2 Bytes
-<<<<<<< Updated upstream
+
                 archivo.writeUTF(habitacion.obtenerCodigo()); //7 Bytes
                 archivo.writeUTF(medico.obtenerId()); //7 Bytes
                 archivo.writeUTF(fechaIngreso.toString()); //25 Bytes
-=======
+
                 archivo.writeUTF(habitacion.obtenerCodigo()); //10 Bytes
                 archivo.writeUTF(medico.obtenerId()); //10 Bytes
                 archivo.writeUTF(fechaIngreso.toString()); //46 Bytes
                 
                 System.out.println("LONGITUD DEL REGISTRO INGRESADO");
                 System.out.println(archivo.length() - 501);
->>>>>>> Stashed changes
+
 
                 if (fechaSalida != null) {
                     archivo.writeUTF(fechaSalida.toString()); //25 Bytes

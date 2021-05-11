@@ -185,6 +185,7 @@ public class Hospital {
         Login login = new Login(medicos, admins, pacientes, habitaciones);
         login.setSize(700, 800);
         login.setVisible(true);
+        login.setLocationRelativeTo(null);
         //login.setExtendedState(login.MAXIMIZED_BOTH);
 
     }

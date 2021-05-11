@@ -425,11 +425,11 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Paciente", "Edad", "Género", "Habitación", "Médico", "FechaIngreso", "FechaSalida"
+                "ID", "Paciente", "Edad", "Género", "Habitación", "Médico", "FechaIngreso"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, true
+                false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -472,11 +472,11 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Paciente", "Edad", "Género", "Habitación", "Médico"
+                "ID", "Paciente", "Edad", "Género", "Habitación", "Médico", "FechaIngreso"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -486,6 +486,12 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTable2);
         if (jTable2.getColumnModel().getColumnCount() > 0) {
             jTable2.getColumnModel().getColumn(0).setResizable(false);
+            jTable2.getColumnModel().getColumn(1).setResizable(false);
+            jTable2.getColumnModel().getColumn(2).setResizable(false);
+            jTable2.getColumnModel().getColumn(3).setResizable(false);
+            jTable2.getColumnModel().getColumn(4).setResizable(false);
+            jTable2.getColumnModel().getColumn(5).setResizable(false);
+            jTable2.getColumnModel().getColumn(6).setResizable(false);
         }
 
         bt_estadistica_medico.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -504,7 +510,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(jButton2)
                         .addGap(28, 28, 28)
                         .addComponent(bt_estadistica_medico))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 779, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -515,9 +521,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
                         .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 779, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jButton2)))
+                    .addComponent(jButton1))
                 .addContainerGap(135, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -527,8 +531,8 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(bt_estadistica_medico))
+                    .addComponent(bt_estadistica_medico)
+                    .addComponent(jButton2))
                 .addGap(43, 43, 43)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(57, 57, 57)
@@ -538,7 +542,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(jButton1)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -915,13 +919,13 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
-        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
         String raiz = System.getProperty("user.dir");
-        
-       try {
-            // variables que sirven para almacenar cada dato que se lee en el archivo .dat
+
+        try {
+
             String id;
             String nombre;
             int edad;
@@ -929,15 +933,13 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
             String habCodigo;
             String medID;
             String fechaIngreso;
-            String fechaSalida;
+            long tamRegistro = 99;
             long cregistros = 0;
             File arch = new File(raiz + "\\PACIENTES.dat");
             RandomAccessFile archivo = new RandomAccessFile(arch, "rw");
-            
-            // leer los campos del archivo .dat e imprimirlos en la tabla
+            cregistros = archivo.length() / tamRegistro;
+            archivo.seek(0);
             for (int r = 0; r < cregistros; r++) {
-                archivo.seek(cregistros);
-                
                 id = archivo.readUTF();
                 nombre = archivo.readUTF();
                 edad = archivo.readInt();
@@ -945,12 +947,12 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
                 habCodigo = archivo.readUTF();
                 medID = archivo.readUTF();
                 fechaIngreso = archivo.readUTF();
-                fechaSalida = archivo.readUTF();
-                model.insertRow(model.getRowCount(), new Object[]{id, nombre, edad, genero, habCodigo, medID, fechaIngreso, fechaSalida});
+                archivo.readUTF();
+                model.insertRow(model.getRowCount(), new Object[]{id, nombre, edad, genero, habCodigo, medID, fechaIngreso});
             }
 
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+        } catch (Exception e) {
+
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -982,7 +984,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:          
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
         String raiz = System.getProperty("user.dir");
 
@@ -999,20 +1001,21 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
             long cregistros = 0;
             File arch = new File(raiz + "\\PACIENTES.dat");
             RandomAccessFile archivo = new RandomAccessFile(arch, "rw");
-            cregistros = archivo.length()/tamRegistro;
-
+            cregistros = archivo.length() / tamRegistro;
+            
             for (int r = 0; r < cregistros; r++) {
-                id = archivo.readUTF();
-                nombre = archivo.readUTF();
-                edad = archivo.readInt();
-                genero = archivo.readChar();
-                habCodigo = archivo.readUTF();
-                medID = archivo.readUTF();
-                fechaIngreso = archivo.readUTF();
-                fechaSalida = archivo.readUTF();
-                model.insertRow(model.getRowCount(), new Object[]{id, nombre, edad, genero, habCodigo, medID, fechaIngreso, fechaSalida});
-
-                System.out.println();
+                if (txtID.getText().equals(id = archivo.readUTF().trim())) {
+                    nombre = archivo.readUTF();
+                    edad = archivo.readInt();
+                    genero = archivo.readChar();
+                    habCodigo = archivo.readUTF();
+                    medID = archivo.readUTF();
+                    fechaIngreso = archivo.readUTF();
+                    fechaSalida = archivo.readUTF();
+                    model.insertRow(model.getRowCount(), new Object[]{id, nombre, edad, genero, habCodigo, medID, fechaIngreso});
+                } else {
+                    archivo.seek(99);
+                }
             }
 
         } catch (Exception e) {
@@ -1022,12 +1025,59 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        
+        
+        
+        /*String raiz = System.getProperty("user.dir");
+
+        try {
+            String id;
+            String nombre;
+            int edad;
+            char genero;
+            String habCodigo;
+            String medID;
+            String fechaIngreso;
+            String fechaSalida;
+            long tamRegistro = 99;
+            long cregistros = 0;
+            File arch = new File(raiz + "\\PACIENTES.dat");
+            RandomAccessFile archivo = new RandomAccessFile(arch, "rw");
+            cregistros = archivo.length() / tamRegistro;
+            
+            for (int r = 0; r < cregistros; r++) {
+                if (txtID.getText().equals(id = archivo.readUTF().trim())) {
+                    nombre = archivo.readUTF();
+                    edad = archivo.readInt();
+                    genero = archivo.readChar();
+                    habCodigo = archivo.readUTF();
+                    medID = archivo.readUTF();
+                    fechaIngreso = archivo.readUTF();
+                    fechaSalida = archivo.readUTF();
+                    //model.insertRow(model.getRowCount(), new Object[]{id, nombre, edad, genero, habCodigo, medID, fechaIngreso});
+                } else {
+                    archivo.seek(99);
+                }
+            }
+
+        } catch (Exception e) {
+
+        }*/
+        
+        
+        
+        
+        
+        
+        
+        
         String codigoActual;
         codigoActual = txtID3.getText();
 
         for (Paciente paciente : pacientes) {
             if (codigoActual.equals(paciente.id)) {
 
+                
                 switch (jComboBox1.getSelectedIndex()) {
                     case 0:
                         paciente.setearNombre(txtNuevo.getText());
@@ -1336,7 +1386,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void bt_estadistica_medicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_estadistica_medicoActionPerformed
-         try {
+        try {
             String raiz = System.getProperty("user.dir");
             File arch = new File(raiz + "\\PACIENTES.dat");
             RandomAccessFile archivo = new RandomAccessFile(arch, "r");
@@ -1358,8 +1408,8 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
 
             // crear chart e ingresar datos
             DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-            for(int i = 0; i < edades.length; i++){
-                dataset.setValue(edades[i], "No. Pacientes", String.valueOf(i*10) + " - " + String.valueOf(i*10+10));
+            for (int i = 0; i < edades.length; i++) {
+                dataset.setValue(edades[i], "No. Pacientes", String.valueOf(i * 10) + " - " + String.valueOf(i * 10 + 10));
             }
 
             JFreeChart chart = ChartFactory.createBarChart("Pacientes ingresados por rango de edades", "Rango de edades", "No. pacientes ingresados", dataset);
@@ -1368,12 +1418,15 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
             ChartFrame frame = new ChartFrame("Diagrama de barras", chart);
             frame.setVisible(true);
             frame.setLocationRelativeTo(null);
-            frame.setSize(800, pacientes.size()*60);
+            frame.setSize(800, pacientes.size() * 60);
 
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(InterfaceMedico.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InterfaceMedico.class
+                    .getName()).log(Level.SEVERE, null, ex);
+
         } catch (IOException ex) {
-            Logger.getLogger(InterfaceMedico.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InterfaceMedico.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_bt_estadistica_medicoActionPerformed
 
@@ -1391,17 +1444,21 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(InterfaceAdministrativo.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(InterfaceAdministrativo.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(InterfaceAdministrativo.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(InterfaceAdministrativo.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);

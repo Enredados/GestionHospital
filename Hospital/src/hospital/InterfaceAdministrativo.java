@@ -29,15 +29,12 @@ import javax.swing.table.DefaultTableModel;
 public class InterfaceAdministrativo extends javax.swing.JFrame {
 
     File pacientestxt;
-
     ArrayList<Medico> medicos;
     ArrayList<Administrativo> administrativos;
     ArrayList<Paciente> pacientes;
     ArrayList<Habitacion> habitaciones;
 
-    /**
-     * Creates new form InterfaceAdministrativo
-     */
+    // Constructores
     public InterfaceAdministrativo() {
         initComponents();
         setLocationRelativeTo(null);
@@ -899,13 +896,13 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
         
-         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
         String raiz = System.getProperty("user.dir");
         
        try {
+            // variables que sirven para almacenar cada dato que se lee en el archivo .dat
             String id;
             String nombre;
             int edad;
@@ -914,13 +911,11 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
             String medID;
             String fechaIngreso;
             String fechaSalida;
-            long tamRegistro = 168;
             long cregistros = 0;
             File arch = new File(raiz + "\\PACIENTES.dat");
             RandomAccessFile archivo = new RandomAccessFile(arch, "rw");
-            cregistros = archivo.length();
-           System.out.println(cregistros);
             
+            // leer los campos del archivo .dat e imprimirlos en la tabla
             for (int r = 0; r < cregistros; r++) {
                 archivo.seek(cregistros);
                 
@@ -933,12 +928,10 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
                 fechaIngreso = archivo.readUTF();
                 fechaSalida = archivo.readUTF();
                 model.insertRow(model.getRowCount(), new Object[]{id, nombre, edad, genero, habCodigo, medID, fechaIngreso, fechaSalida});
-
-                System.out.println();
             }
 
-        } catch (Exception e) {
-
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -1006,13 +999,6 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
         } catch (Exception e) {
 
         }
-        /*
-      for (Paciente paciente : pacientes) {
-            String[] elementos = paciente.obtenerDatosPaciente();
-            model.insertRow(model.getRowCount(), new Object[]{elementos[0], elementos[1], elementos[2], elementos[3], elementos[4], paciente.obtenerMedico().obtenerNombre()});
-        }
-         */
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

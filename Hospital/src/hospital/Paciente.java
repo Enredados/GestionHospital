@@ -102,15 +102,15 @@ public class Paciente extends Persona {
         } else {
             id = id.substring(0, 5);
         }
-        
+
         if (nombre.length() < 20) {
             for (int i = nombre.length(); i < 20; i++) {
                 nombre += " ";
             }
         } else {
             nombre = nombre.substring(0, 20);
-        }        
-        
+        }
+
         String aux = medico.obtenerId();
         if (medico.obtenerId().length() < 5) {
             for (int i = medico.obtenerId().length(); i < 5; i++) {
@@ -120,7 +120,7 @@ public class Paciente extends Persona {
         } else {
             medico.setearID(medico.obtenerId().substring(0, 5));
         }
-        
+
         aux = habitacion.obtenerCodigo();
         if (habitacion.obtenerCodigo().length() < 5) {
             for (int i = habitacion.obtenerCodigo().length(); i < 5; i++) {
@@ -140,32 +140,22 @@ public class Paciente extends Persona {
             RandomAccessFile archivo = new RandomAccessFile(arch, "rw");
 
             if (archivo.length() != 0) {
-                archivo.seek(archivo.length());                
-            } 
+                archivo.seek(archivo.length());
+            }
             archivo.writeUTF(id); //7 Bytes
-                archivo.writeUTF(nombre); //22 Bytes
-                archivo.writeInt(edad); //4 Bytes
-                archivo.writeChar(genero); //2 Bytes
+            archivo.writeUTF(nombre); //22 Bytes
+            archivo.writeInt(edad); //4 Bytes
+            archivo.writeChar(genero); //2 Bytes
+            archivo.writeUTF(habitacion.obtenerCodigo()); //7 Bytes
+            archivo.writeUTF(medico.obtenerId()); //7 Bytes
+            archivo.writeUTF(fechaIngreso.toString()); //25 Bytes
 
-                archivo.writeUTF(habitacion.obtenerCodigo()); //7 Bytes
-                archivo.writeUTF(medico.obtenerId()); //7 Bytes
-                archivo.writeUTF(fechaIngreso.toString()); //25 Bytes
-
-                archivo.writeUTF(habitacion.obtenerCodigo()); //10 Bytes
-                archivo.writeUTF(medico.obtenerId()); //10 Bytes
-                archivo.writeUTF(fechaIngreso.toString()); //46 Bytes
-                
-                System.out.println("LONGITUD DEL REGISTRO INGRESADO");
-                System.out.println(archivo.length() - 501);
-
-
-                if (fechaSalida != null) {
-                    archivo.writeUTF(fechaSalida.toString()); //25 Bytes
-                } else {
-                    archivo.writeUTF("null                   ");
-                }
-                System.out.println("archivo length: " + archivo.length());
-                archivo.close();
+            if (fechaSalida != null) {
+                archivo.writeUTF(fechaSalida.toString()); //25 Bytes
+            } else {
+                archivo.writeUTF("null                   ");
+            }
+            archivo.close();
         } catch (IOException e) {
             System.out.println("error en el ingreso");
         }

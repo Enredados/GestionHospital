@@ -127,33 +127,25 @@ public class Habitacion {
             RandomAccessFile rand = new RandomAccessFile(arch, "rw");
             darFormato();
 
-            if (rand.length() == 0) {
-                rand.writeUTF(codigo);
-                rand.writeInt(piso);
-                rand.writeUTF(tipo);
-                rand.writeUTF(pacienteID);
-                rand.writeBoolean(disponibilidad);
-                rand.close();
-            } else {
+            if (rand.length() != 0) {
                 rand.seek(rand.length());
-                rand.writeUTF(codigo);
-                rand.writeInt(piso);
-                rand.writeUTF(tipo);
-                rand.writeUTF(pacienteID);
-                rand.writeBoolean(disponibilidad);
-                rand.close();
             }
+            rand.writeUTF(codigo); //7 Bytes
+            rand.writeInt(piso); //4 Bytes
+            rand.writeUTF(tipo); //7 Bytes
+            rand.writeUTF(pacienteID); //7 Bytes
+            rand.writeBoolean(disponibilidad); //1 Byte
+            rand.close();
+            
             mostrarFichero();
-
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Habitacion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Habitacion.class.getName()).log(Level.SEVERE, null, ex);
+            
+        } catch (Exception e) {
+            Logger.getLogger(Habitacion.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
     public void darFormato() {
-        // codigo con formato char de 5 (10 bytes)
+        // codigo con formato char de 5 (7 bytes)
         if (codigo.length() > LONG_CODIGO) {
             codigo = codigo.substring(0, LONG_CODIGO);
         } else {
@@ -161,7 +153,7 @@ public class Habitacion {
                 codigo += " ";
             }
         }
-        // tipo con formato char de 5 (10 bytes)
+        // tipo con formato char de 5 (7 bytes)
         if (tipo.length() > LONG_TIPO) {
             tipo = tipo.substring(0, LONG_TIPO);
         } else {
@@ -169,7 +161,7 @@ public class Habitacion {
                 tipo += " ";
             }
         }
-        // pacienteID con formato char de 5 (10 bytes)
+        // pacienteID con formato char de 5 (7 bytes)
         if (pacienteID.length() > LONG_PACIENTE) {
             pacienteID = pacienteID.substring(0, LONG_PACIENTE);
         } else {

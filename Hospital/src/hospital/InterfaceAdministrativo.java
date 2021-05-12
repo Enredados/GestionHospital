@@ -1030,7 +1030,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
 
         try {
             String id, aux;
-            long pos=0;
+            long pos = 0;
             String nombre;
             int edad;
             char genero;
@@ -1045,11 +1045,11 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
             cregistros = archivo.length() / tamRegistro;
 
             for (int r = 0; r < cregistros; r++) {
+                archivo.seek(pos);
                 if (txtID3.getText().equals(id = archivo.readUTF().trim())) {
-                    aux = txtID3.getText();
+                    aux = txtNuevo.getText();
                     switch (jComboBox1.getSelectedIndex()) {
                         case 0:
-
                             if (aux.length() < 20) {
                                 for (int i = aux.length(); i < 20; i++) {
                                     aux += " ";
@@ -1057,78 +1057,72 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
                             } else {
                                 aux = aux.substring(0, 20);
                             }
-
-                            archivo.writeUTF(id); //7 Bytes
-
-                            //paciente.setearNombre(txtNuevo.getText());
+                            archivo.writeUTF(aux); //22 Bytes
                             JOptionPane.showMessageDialog(this, "Nombre actualizado correctamente");
-                            //lblMsg.setText("Nombre actualizado correctamente");
                             break;
                         case 1:
-                            //paciente.setearEdad(Integer.parseInt(txtNuevo.getText()));
-                            // lblMsg.setText("Edad actualizada correctamente");
+                            archivo.seek(pos + 29);
+                            archivo.writeInt(Integer.parseInt(aux)); //4 Bytes
                             JOptionPane.showMessageDialog(this, "Edad actualizada correctamente");
                             break;
                         case 2:
-                            //paciente.setearGenero(txtNuevo.getText().toCharArray()[0]);
-                            // lblMsg.setText("Genero actualizado correctamente");
+                            archivo.seek(pos + 33);
+                            archivo.writeChar(aux.toCharArray()[0]); //2 Bytes
                             JOptionPane.showMessageDialog(this, "Genero actualizado correctamente");
                             break;
                         case 3:
-                            //Habitacion aux = paciente.obtenerHabitacion();
-                            for (Habitacion habitacion : habitaciones) {
 
-                                try {
+                            File archHab = new File(raiz + "\\HABITACIONES.dat");
+                            RandomAccessFile archivoHab = new RandomAccessFile(archHab, "rw");
+                            long tamRegistroHab = 26,
+                             posHab = 0;
+                            long registrosHab = archivoHab.length() / tamRegistroHab;
+                            String codigoHab;
 
-                                    if (habitacion.obtenerCodigo().equals(txtNuevo.getText())) {
-                                        if (habitacion.obtenerDisponibilidad()) {
-                                            //aux.eliminarPaciente();
-                                            //paciente.setearHabitacion(habitacion);
-                                            //habitacion.setearPaciente(paciente);
-                                            //lblMsg.setText("Habitacion actualizada correctamente");
-                                            JOptionPane.showMessageDialog(this, "Habitacion actualizada correctamente");
+                            for (int i = 0; i < registrosHab; i++) {
+                                if (txtID3.getText().equals(codigoHab = archivoHab.readUTF())) {
+                                    archivoHab.seek(posHab + 25);
+                                    if (archivoHab.readBoolean()) {
+                                        archivoHab.seek(posHab + 25);
+                                        archivoHab.writeBoolean(false);
+
+                                        if (aux.length() < 5) {
+                                            for (int j = aux.length(); j < 5; j++) {
+                                                aux += " ";
+                                            }
+                                        } else {
+                                            aux = aux.substring(0, 5);
                                         }
+                                        archivo.seek(pos + 35);
+                                        archivo.writeUTF(aux);
+
+                                        for (int k = 0; k < registrosHab; k++) {
+                                            if (codigoHab.equals(archivoHab.readUTF())) {
+                                                archivoHab.seek(pos + 25);
+                                                archivoHab.writeBoolean(true);
+                                                break;
+                                            }
+                                            posHab += 26;
+
+                                        }
+                                        JOptionPane.showMessageDialog(this, "Habitacion actualizada correctamente");
+                                        break;
+                                    } else {
+                                        JOptionPane.showMessageDialog(this, "Error, la habitación está ocupada");
+                                        break;
                                     }
-
-                                } catch (Exception e) {
-                                    JOptionPane.showMessageDialog(this, "No se pudo actualizar");
-                                    //  lblMsg.setText("No se pudo actualizar");
                                 }
+                                posHab += 26;
                             }
-                            DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
-                            for (int i = model.getRowCount() - 1; i >= 0; i--) {
-                                model.removeRow(i);
-                            }
-
-                            if (habitaciones.size() > 0) {
-                                for (Habitacion hab : habitaciones) {
-                                    String[] elementos = hab.obtenerDatos();
-
-                                    model.insertRow(model.getRowCount(), new Object[]{elementos[0], elementos[1], elementos[2], elementos[3]});
-                                }
-                            }
-                            break;
-
+                            archivoHab.close();
                     }
-
-                    nombre = archivo.readUTF();
-                    edad = archivo.readInt();
-                    genero = archivo.readChar();
-                    habCodigo = archivo.readUTF();
-                    medID = archivo.readUTF();
-                    fechaIngreso = archivo.readUTF();
-                    fechaSalida = archivo.readUTF();
-                    //model.insertRow(model.getRowCount(), new Object[]{id, nombre, edad, genero, habCodigo, medID, fechaIngreso});
-                } else {
-                    archivo.seek(99);
                 }
+                pos += 99;
             }
-
+            archivo.close();
         } catch (Exception e) {
 
         }
-
-
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void txtID3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtID3ActionPerformed

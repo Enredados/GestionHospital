@@ -33,8 +33,8 @@ public class Administrativo extends Persona {
     }
 
     public String obtenerInformacion() {
-        return "ID:" + id + ";Nombre:" + nombre + ";Edad:" + edad
-                + ";Género:" + genero + ";Contraseña:" + contrasena;
+        return "ID:" + _id + ";Nombre:" + _nombre + ";Edad:" + _edad
+                + ";Género:" + _genero + ";Contraseña:" + contrasena;
     }
     
     public void guardar() {
@@ -46,17 +46,17 @@ public class Administrativo extends Persona {
 
             if (archivo.length() != 0) {
                 archivo.seek(archivo.length());
-                archivo.writeUTF(id);
-                archivo.writeUTF(nombre);
-                archivo.writeInt(edad);
-                archivo.writeChar(genero);
+                archivo.writeUTF(_id);
+                archivo.writeUTF(_nombre);
+                archivo.writeInt(_edad);
+                archivo.writeChar(_genero);
                 archivo.writeUTF(contrasena);
                 archivo.close();
             } else {
-                archivo.writeUTF(id);
-                archivo.writeUTF(nombre);
-                archivo.writeInt(edad);
-                archivo.writeChar(genero);
+                archivo.writeUTF(_id);
+                archivo.writeUTF(_nombre);
+                archivo.writeInt(_edad);
+                archivo.writeChar(_genero);
                 archivo.writeUTF(contrasena);
                 archivo.close();
             }
@@ -67,22 +67,22 @@ public class Administrativo extends Persona {
     }
     
     public void darFormato(){
-        if(id.length() < 5){
-           for(int i = id.length(); i < 5; i++){
-                id +=" ";
+        if(_id.length() < 5){
+           for(int i = _id.length(); i < 5; i++){
+                _id +=" ";
             }
         }
         else {
-            id = id.substring(0,5);
+            _id = _id.substring(0,5);
         }
         
-        if(nombre.length() < 25){
-           for(int i = nombre.length(); i < 25; i++){
-                nombre +=" ";
+        if(_nombre.length() < 25){
+           for(int i = _nombre.length(); i < 25; i++){
+                _nombre +=" ";
             }
         }
         else {
-            nombre = nombre.substring(0,25);
+            _nombre = _nombre.substring(0,25);
         }
         
         if(contrasena.length() < 10){

@@ -304,7 +304,7 @@ public class InterfaceMedico extends javax.swing.JFrame {
         try {
             for (Paciente paciente : pacientes) {
 
-                if (JID.getText().equals(paciente.id) && paciente.obtenerMedico().obtenerId().equals(idUsuario)) {
+                if (JID.getText().equals(paciente._id) && paciente.obtenerMedico().obtenerId().equals(idUsuario)) {
                     String[] elementos = paciente.obtenerDatosPaciente();
                     model.insertRow(model.getRowCount(), new Object[]{elementos[1], elementos[2], elementos[3], elementos[4]});
                     jTextDiagnostico.setText(paciente.obtenerDiagnostico());
@@ -372,7 +372,7 @@ public class InterfaceMedico extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         for (Paciente paciente : pacientes) {
-            if (JID.getText().equals(paciente.id) && paciente.obtenerMedico().obtenerId().equals(idUsuario)) {
+            if (JID.getText().equals(paciente._id) && paciente.obtenerMedico().obtenerId().equals(idUsuario)) {
                 paciente.agregarDiagnostico(jTextDiagnostico.getText());
             }
         }
@@ -402,8 +402,8 @@ public class InterfaceMedico extends javax.swing.JFrame {
             for (int i = 0; i < cantidadRegistros; i++) {
                 System.out.println(archivo.length());
                 edades[(int) archivo.readInt() / 10]++;
-                posEdad += 4;       // los 4 bytes que lee de la edad
-                posEdad += 95;     // los 99 - 4 bytes para leer la edad del siguiente registro
+                posEdad += 4;       // los 4 bytes que lee de la _edad
+                posEdad += 95;     // los 99 - 4 bytes para leer la _edad del siguiente registro
                 archivo.seek(posEdad);
             }
 

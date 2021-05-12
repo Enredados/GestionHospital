@@ -10,16 +10,16 @@ package hospital;
  * @author alang
  */
 public class Persona {
-    protected String id;
-    protected String  nombre;
-    protected int edad;
-    protected char genero;
+    protected String _id;
+    protected String  _nombre;
+    protected int _edad;
+    protected char _genero;
     
     public Persona(String id, String nombre, int edad, char genero){
-        this.id = id;
-        this.nombre = nombre;
-        this.edad = edad;
-        this.genero = genero;
+        this._id = id;
+        this._nombre = nombre;
+        this._edad = edad;
+        this._genero = genero;
     }
     
     public Persona(){
@@ -27,22 +27,22 @@ public class Persona {
     }
     
     public String obtenerId(){
-        return this.id;
+        return _id;
     }    
     
     public String obtenerNombre(){
-        return this.nombre;
+        return _nombre;
     }
     
     public void setearNombre(String nombre){
-        this.nombre = nombre;
+        this._nombre = nombre;
     }
     
     public int obtenerEdad(){
-        return this.edad;
+        return _edad;
     }
     
     public char obtenerGenero(){
-        return this.genero;
+        return _genero;
     }
 }

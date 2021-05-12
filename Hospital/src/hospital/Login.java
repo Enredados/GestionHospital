@@ -192,7 +192,7 @@ public class Login extends javax.swing.JFrame {
         String pass = String.valueOf(Jpassword.getPassword());
 
         for (Administrativo usuario : administrativos) {
-            if (usuario.id.equals(user) && usuario.obtenerContrasena().equals(pass)) {
+            if (usuario._id.equals(user) && usuario.obtenerContrasena().equals(pass)) {
                 InterfaceAdministrativo iadministrativo = new InterfaceAdministrativo(medicos, administrativos, pacientes, habitaciones);
                 iadministrativo.setSize(1000, 800);
                 iadministrativo.setVisible(true);
@@ -201,8 +201,8 @@ public class Login extends javax.swing.JFrame {
             }
         }
         for (Medico usuario : medicos) {
-            if (usuario.id.equals(user) && usuario.obtenerContrasena().equals(pass)) {
-                InterfaceMedico imedico = new InterfaceMedico(medicos, administrativos, pacientes, habitaciones, usuario.id);
+            if (usuario._id.equals(user) && usuario.obtenerContrasena().equals(pass)) {
+                InterfaceMedico imedico = new InterfaceMedico(medicos, administrativos, pacientes, habitaciones, usuario._id);
                 imedico.setSize(1000, 800);
                 imedico.setVisible(true);
                 this.setVisible(false);

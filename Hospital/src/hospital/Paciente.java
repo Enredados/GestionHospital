@@ -62,23 +62,23 @@ public class Paciente extends Persona {
 
     public String[] obtenerDatosPaciente() {
 
-        return new String[]{id, nombre, String.valueOf(edad), String.valueOf(genero), habitacion.obtenerCodigo(), String.valueOf(fechaIngreso), diagnostico};
+        return new String[]{_id, _nombre, String.valueOf(_edad), String.valueOf(_genero), habitacion.obtenerCodigo(), String.valueOf(fechaIngreso), diagnostico};
     }
 
     public String obtenerDatosString() {
-        return "ID:" + id + ";Nombre:" + nombre + ";Edad:" + edad + ";Género:" + genero + ";Habitación:" + habitacion.obtenerCodigo() + ";FechaIngreso:" + fechaIngreso + ";Diagnóstico:" + diagnostico + "\n";
+        return "ID:" + _id + ";Nombre:" + _nombre + ";Edad:" + _edad + ";Género:" + _genero + ";Habitación:" + habitacion.obtenerCodigo() + ";FechaIngreso:" + fechaIngreso + ";Diagnóstico:" + diagnostico + "\n";
     }
 
     public void setearNombre(String nombre) {
-        this.nombre = nombre;
+        this._nombre = nombre;
     }
 
     public void setearEdad(int edad) {
-        this.edad = edad;
+        this._edad = edad;
     }
 
     public void setearGenero(char genero) {
-        this.genero = genero;
+        this._genero = genero;
     }
 
     public void borrarMedico() {
@@ -90,25 +90,25 @@ public class Paciente extends Persona {
     }
 
     public String obtenerInformacion() {
-        return "ID:" + id + ";Nombre:" + nombre + ";Edad:" + edad
-                + ";Género:" + genero + ";Habitación:" + habitacion.obtenerCodigo() + ";Médico:" + medico.obtenerId() + ";FechaIngreso:" + String.valueOf(fechaIngreso);
+        return "ID:" + _id + ";Nombre:" + _nombre + ";Edad:" + _edad
+                + ";Género:" + _genero + ";Habitación:" + habitacion.obtenerCodigo() + ";Médico:" + medico.obtenerId() + ";FechaIngreso:" + String.valueOf(fechaIngreso);
     }
 
     public void darFormato() {
-        if (id.length() < 5) {
-            for (int i = id.length(); i < 5; i++) {
-                id += " ";
+        if (_id.length() < 5) {
+            for (int i = _id.length(); i < 5; i++) {
+                _id += " ";
             }
         } else {
-            id = id.substring(0, 5);
+            _id = _id.substring(0, 5);
         }
 
-        if (nombre.length() < 20) {
-            for (int i = nombre.length(); i < 20; i++) {
-                nombre += " ";
+        if (_nombre.length() < 20) {
+            for (int i = _nombre.length(); i < 20; i++) {
+                _nombre += " ";
             }
         } else {
-            nombre = nombre.substring(0, 20);
+            _nombre = _nombre.substring(0, 20);
         }
 
         String aux = medico.obtenerId();
@@ -142,10 +142,10 @@ public class Paciente extends Persona {
             if (archivo.length() != 0) {
                 archivo.seek(archivo.length());
             }
-            archivo.writeUTF(id); //7 Bytes
-            archivo.writeUTF(nombre); //22 Bytes
-            archivo.writeInt(edad); //4 Bytes
-            archivo.writeChar(genero); //2 Bytes
+            archivo.writeUTF(_id); //7 Bytes
+            archivo.writeUTF(_nombre); //22 Bytes
+            archivo.writeInt(_edad); //4 Bytes
+            archivo.writeChar(_genero); //2 Bytes
             archivo.writeUTF(habitacion.obtenerCodigo()); //7 Bytes
             archivo.writeUTF(medico.obtenerId()); //7 Bytes
             archivo.writeUTF(fechaIngreso.toString()); //25 Bytes

@@ -53,30 +53,30 @@ public class Medico extends Persona {
     }
 
     public String obtenerInformacion() {
-        return "ID:" + id + ";Nombre:" + nombre + ";Edad:" + edad
-                + ";Género:" + genero + ";Especialidad:" + especialidad
+        return "ID:" + _id + ";Nombre:" + _nombre + ";Edad:" + _edad
+                + ";Género:" + _genero + ";Especialidad:" + especialidad
                 + ";Contraseña:" + contrasena;
     }
     
     public void setearID(String id){
-        this.id = id;
+        this._id = id;
     }
 
     public void darFormato() {
-        if (id.length() < 5) {
-            for (int i = id.length() - 1; i < 5; i++) {
-                id += " ";
+        if (_id.length() < 5) {
+            for (int i = _id.length() - 1; i < 5; i++) {
+                _id += " ";
             }
         } else {
-            id = id.substring(0, 5);
+            _id = _id.substring(0, 5);
         }
 
-        if (nombre.length() < 20) {
-            for (int i = nombre.length() - 1; i < 20; i++) {
-                nombre += " ";
+        if (_nombre.length() < 20) {
+            for (int i = _nombre.length() - 1; i < 20; i++) {
+                _nombre += " ";
             }
         } else {
-            nombre = nombre.substring(0, 20);
+            _nombre = _nombre.substring(0, 20);
         }
 
         if (especialidad.length() < 20) {
@@ -106,18 +106,18 @@ public class Medico extends Persona {
 
             if (archivo.length() != 0) {
                 archivo.seek(archivo.length());
-                archivo.writeUTF(id);
-                archivo.writeUTF(nombre);
-                archivo.writeInt(edad);
-                archivo.writeChar(genero);
+                archivo.writeUTF(_id);
+                archivo.writeUTF(_nombre);
+                archivo.writeInt(_edad);
+                archivo.writeChar(_genero);
                 archivo.writeUTF(especialidad);
                 archivo.writeUTF(contrasena);
                 archivo.close();
             } else {
-                archivo.writeUTF(id);
-                archivo.writeUTF(nombre);
-                archivo.writeInt(edad);
-                archivo.writeChar(genero);
+                archivo.writeUTF(_id);
+                archivo.writeUTF(_nombre);
+                archivo.writeInt(_edad);
+                archivo.writeChar(_genero);
                 archivo.writeUTF(especialidad);
                 archivo.writeUTF(contrasena);
                 archivo.close();

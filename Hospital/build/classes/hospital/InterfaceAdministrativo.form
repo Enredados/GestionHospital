@@ -109,7 +109,7 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" attributes="0">
                                                   <Component id="txtHab" min="-2" pref="169" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
                                                   <Component id="lblHab" min="-2" pref="261" max="-2" attributes="0"/>
                                               </Group>
                                               <Component id="txtEdad" alignment="0" min="-2" pref="169" max="-2" attributes="0"/>
@@ -135,7 +135,7 @@
                                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="0" pref="208" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="129" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -163,7 +163,7 @@
                               <Component id="txtEdad" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtHab" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -175,7 +175,7 @@
                           <Component id="jScrollPane3" min="-2" pref="155" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                           <Component id="jButton4" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="111" max="32767" attributes="0"/>
+                          <EmptySpace pref="23" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>

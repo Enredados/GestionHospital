@@ -1,6 +1,0 @@
-Código:h001;Piso:1;Tipo:General;Paciente:null
-Código:h002;Piso:2;Tipo:VIP;Paciente:null
-Código:h003;Piso:3;Tipo:General;Paciente:null
-Código:h004;Piso:5;Tipo:VIP;Paciente:null
-Código:h005;Piso:5;Tipo:VIP;Paciente:null
-Código:h006;Piso:6;Tipo:VIP;Paciente:null

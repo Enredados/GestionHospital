@@ -1,5 +1,0 @@
-ID:m001;Nombre:Dra. Polo;Edad:23;Género:F;Especialidad:Dermatología;Contraseña:001
-ID:m002;Nombre:Dr. Strange;Edad:25;Género:M;Especialidad:Alergología;Contraseña:002
-ID:m003;Nombre:Dr. Ácula;Edad:24;Género:M;Especialidad:Pediatría;Contraseña:003
-ID:m004;Nombre:Dra. Polo;Edad:27;Género:F;Especialidad:Dermatología;Contraseña:004
-ID:m005;Nombre:Dr. Strange;Edad:29;Género:M;Especialidad:Pediatría;Contraseña:005

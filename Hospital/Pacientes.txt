@@ -1,6 +1,0 @@
-ID:p01;Nombre:135;Edad:23;Género:M;Habitación:h002;Médico:m01;FechaIngreso:2016-03-04T11:30
-ID:p02;Nombre:136;Edad:24;Género:M;Habitación:h003;Médico:m02;FechaIngreso:2016-03-04T11:30
-ID:p03;Nombre:137;Edad:25;Género:M;Habitación:h004;Médico:m01;FechaIngreso:2016-03-04T11:30
-ID:p04;Nombre:138;Edad:26;Género:M;Habitación:h005;Médico:m02;FechaIngreso:2016-03-04T11:30
-ID:p05;Nombre:139;Edad:27;Género:M;Habitación:h006;Médico:m01;FechaIngreso:2016-03-04T11:30
-ID:21;Nombre:ADS;Edad:12;Género:M;Habitación:h001;Médico:m01;FechaIngreso:2021-05-06T23:29

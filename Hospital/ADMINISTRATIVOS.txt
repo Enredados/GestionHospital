@@ -1,7 +1,0 @@
-ID:a01;Nombre:Admin1;Edad:23;Género:F;Contraseña:001
-ID:a02;Nombre:Admin2;Edad:24;Género:M;Contraseña:002
-ID:a03;Nombre:Admin3;Edad:25;Género:M;Contraseña:003
-ID:a04;Nombre:Admin4;Edad:26;Género:M;Contraseña:004
-ID:a05;Nombre:Admin5;Edad:27;Género:F;Contraseña:005
-ID:213;Nombre:daswf;Edad:21;Género:M;Contraseña:234
-ID:1010;Nombre:Miguel;Edad:30;Género:M;Contraseña:1010

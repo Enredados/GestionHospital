@@ -12,8 +12,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author alang
- * Comentario de prueba
+ * @author alang Comentario de prueba
  */
 public class Medico extends Persona {
 
@@ -57,14 +56,14 @@ public class Medico extends Persona {
                 + ";Género:" + _genero + ";Especialidad:" + especialidad
                 + ";Contraseña:" + contrasena;
     }
-    
-    public void setearID(String id){
+
+    public void setearID(String id) {
         this._id = id;
     }
 
     public void darFormato() {
         if (_id.length() < 5) {
-            for (int i = _id.length() - 1; i < 5; i++) {
+            for (int i = _id.length(); i < 5; i++) {
                 _id += " ";
             }
         } else {
@@ -72,7 +71,7 @@ public class Medico extends Persona {
         }
 
         if (_nombre.length() < 20) {
-            for (int i = _nombre.length() - 1; i < 20; i++) {
+            for (int i = _nombre.length(); i < 20; i++) {
                 _nombre += " ";
             }
         } else {
@@ -80,7 +79,7 @@ public class Medico extends Persona {
         }
 
         if (especialidad.length() < 20) {
-            for (int i = especialidad.length() - 1; i < 20; i++) {
+            for (int i = especialidad.length(); i < 20; i++) {
                 especialidad += " ";
             }
         } else {
@@ -88,7 +87,7 @@ public class Medico extends Persona {
         }
 
         if (contrasena.length() < 10) {
-            for (int i = contrasena.length() - 1; i < 10; i++) {
+            for (int i = contrasena.length(); i < 10; i++) {
                 contrasena += " ";
             }
         } else {
@@ -101,27 +100,19 @@ public class Medico extends Persona {
         try {
             darFormato();
             File arch = new File(raiz + "\\MEDICOS.dat");
-            System.out.println(raiz);
             RandomAccessFile archivo = new RandomAccessFile(arch, "rw");
 
-            if (archivo.length() != 0) {
+            if (archivo.length() != 0) {                
                 archivo.seek(archivo.length());
-                archivo.writeUTF(_id);
-                archivo.writeUTF(_nombre);
-                archivo.writeInt(_edad);
-                archivo.writeChar(_genero);
-                archivo.writeUTF(especialidad);
-                archivo.writeUTF(contrasena);
-                archivo.close();
-            } else {
-                archivo.writeUTF(_id);
-                archivo.writeUTF(_nombre);
-                archivo.writeInt(_edad);
-                archivo.writeChar(_genero);
-                archivo.writeUTF(especialidad);
-                archivo.writeUTF(contrasena);
-                archivo.close();
-            }
+            }                                       // TAMAÑO EN BYTES (incluido los 2 del writeUtf)
+            archivo.writeUTF(_id);                  // 7
+            archivo.writeUTF(_nombre);              // 22
+            archivo.writeInt(_edad);                // 4
+            archivo.writeChar(_genero);             // 1    2
+            archivo.writeUTF(especialidad);         // 22
+            archivo.writeUTF(contrasena);           // 12
+            archivo.close();                        // TOTAL: 68 por registro
+            
         } catch (IOException e) {
             System.out.println("error en el ingreso");
         }

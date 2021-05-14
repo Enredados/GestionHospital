@@ -608,6 +608,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
             }
         });
 
+        jButton8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jButton8.setText("Ver estadísticas de médicos");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -688,7 +689,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
                 .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(86, 86, 86)
                 .addComponent(jButton8)
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Agregar Médico", jPanel4);
@@ -1437,37 +1438,83 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         try {
             String raiz = System.getProperty("user.dir");
-            File arch = new File(raiz + "\\PACIENTES.dat");
+            File arch = new File(raiz + "\\MEDICOS.dat");
             RandomAccessFile archivo = new RandomAccessFile(arch, "r");
 
-            // Lectura de los registros en el archivo .dat
-            int[] edades = new int[10];
-            final int REGISTRO_LENGTH = 99;
+            /*
+            Indice de las especialidades en el arreglo:
+            1. Alergología      2. Cardiología
+            3. Oncología        4. Traumatología
+            5. Endocrinología   6. Problematología
+            7. Dermatología     8. Geriatría
+            9. Pediatría
+             */
+            int[] especialidades = new int[10];
+            final int REGISTRO_LENGTH = 70;
             long cantidadRegistros = archivo.length() / REGISTRO_LENGTH;
-            int posEdad = 29;
-            System.out.println(archivo.length());
-            archivo.seek(posEdad);
+            int posEspecialidad = 35;
+            archivo.seek(posEspecialidad);
+            
+            // sumar a cada indice del arreglo segun la especialidad del medico
             for (int i = 0; i < cantidadRegistros; i++) {
-                System.out.println(archivo.length());
-                edades[(int) archivo.readInt() / 10]++;
-                posEdad += 4;       // los 4 bytes que lee de la _edad
-                posEdad += 95;     // los 99 - 4 bytes para leer la _edad del siguiente registro
-                archivo.seek(posEdad);
+                switch (archivo.readUTF().trim()) {
+                    case "Alergología":
+                        especialidades[0]++;
+                        break;
+                    case "Cardiología":
+                        especialidades[1]++;
+                        break;
+                    case "Oncología":
+                        especialidades[2]++;
+                        break;
+                    case "Traumatología":
+                        especialidades[3]++;
+                        break;
+                    case "Endocrinología":
+                        especialidades[4]++;
+                        break;
+                    case "Problematología":
+                        especialidades[5]++;
+                        break;
+                    case "Dermatología":
+                        especialidades[6]++;
+                        break;
+                    case "Geriatría":
+                        especialidades[7]++;
+                        break;
+                    case "Pediatría":
+                        especialidades[8]++;
+                        break;
+                    default:
+                        especialidades[9]++;
+                        break;
+                }
+                posEspecialidad += 22;       // los 22 bytes que lee de la _edad
+                posEspecialidad += 48;     // los 70 - 22 bytes para leer la edad del siguiente registro
+                archivo.seek(posEspecialidad);
             }
 
-            // crear chart e ingresar datos
+            // ingresar datos al dataset
             DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-            for(int i = 0; i < edades.length; i++){
-                dataset.setValue(edades[i], "No. Pacientes", String.valueOf(i*10) + " - " + String.valueOf(i*10+10));
-            }
+            dataset.setValue(especialidades[0], "No. médicos", "Alergología");
+            dataset.setValue(especialidades[1], "No. médicos", "Cardiología");
+            dataset.setValue(especialidades[2], "No. médicos", "Oncología");
+            dataset.setValue(especialidades[3], "No. médicos", "Traumatología");
+            dataset.setValue(especialidades[4], "No. médicos", "Endocrinología");
+            dataset.setValue(especialidades[5], "No. médicos", "Problematología");
+            dataset.setValue(especialidades[6], "No. médicos", "Dermatología");
+            dataset.setValue(especialidades[7], "No. médicos", "Geriatría");
+            dataset.setValue(especialidades[8], "No. médicos", "Pediatría");
+            dataset.setValue(especialidades[9], "No. médicos", "Otra");           
 
-            JFreeChart chart = ChartFactory.createBarChart("Pacientes ingresados por rango de edades", "Rango de edades", "No. pacientes ingresados", dataset);
+            // crear bar chart (diagrama de barras) e imprimirlo
+            JFreeChart chart = ChartFactory.createBarChart("Médicos por especialidades", "Especialidad", "No. médicos", dataset);
             CategoryPlot p = chart.getCategoryPlot();
             p.setRangeGridlinePaint(Color.black);
             ChartFrame frame = new ChartFrame("Diagrama de barras", chart);
             frame.setVisible(true);
             frame.setLocationRelativeTo(null);
-            frame.setSize(800, pacientes.size()*60);
+            frame.setSize(1200, 800);
 
         } catch (FileNotFoundException ex) {
             Logger.getLogger(InterfaceMedico.class.getName()).log(Level.SEVERE, null, ex);

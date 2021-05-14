@@ -6,6 +6,9 @@
 package hospital;
 
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import javax.accessibility.AccessibleKeyBinding;
 import javax.swing.KeyStroke;
 import java.util.ArrayList;
@@ -15,11 +18,6 @@ import java.util.ArrayList;
  * @author bryan
  */
 public class Login extends javax.swing.JFrame {
-    ArrayList<Medico> medicos;
-    ArrayList<Administrativo> administrativos;
-    ArrayList<Paciente> pacientes;
-    ArrayList<Habitacion> habitaciones;
-    
 
     /**
      * Creates new form Login
@@ -27,13 +25,61 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
     }
-                        
-    public Login(ArrayList<Medico> medicos, ArrayList<Administrativo> administrativos, ArrayList<Paciente> pacientes, ArrayList<Habitacion> habitaciones) {
-        initComponents();
-        this.medicos = medicos;
-        this.administrativos = administrativos;
-        this.pacientes = pacientes;
-        this.habitaciones = habitaciones;
+
+    public boolean verificarAdministrativo() {
+        String raiz = System.getProperty("user.dir");
+        try {
+            long tamRegistro = 52;
+            long cregistros = 0;
+            long pos = 0;
+            File arch = new File(raiz + "\\ADMINISTRATIVO.dat");
+            RandomAccessFile archivo = new RandomAccessFile(arch, "r");
+            cregistros = archivo.length() / tamRegistro;
+
+            for (int r = 0; r < cregistros; r++) {
+                archivo.seek(pos);
+                if (Jusuario.getText().equals(archivo.readUTF().trim())) {
+                    archivo.seek(pos + 40);
+                    if (String.valueOf(Jpassword.getPassword()).equals(archivo.readUTF().trim())) {
+                        archivo.close();
+                        return true;
+                    }
+                }
+                pos += 52;
+            }
+            archivo.close();
+        } catch (Exception e) {
+
+        }
+        return false;
+    }
+
+    public boolean verificarMedico() {
+        String raiz = System.getProperty("user.dir");
+        try {
+            long tamRegistro = 70;
+            long cregistros = 0;
+            long pos = 0;
+            File arch = new File(raiz + "\\MEDICOS.dat");
+            RandomAccessFile archivo = new RandomAccessFile(arch, "r");
+            cregistros = archivo.length() / tamRegistro;
+
+            for (int r = 0; r < cregistros; r++) {
+                archivo.seek(pos);
+                if (Jusuario.getText().equals(archivo.readUTF().trim())) {
+                    archivo.seek(pos + 58);
+                    if (String.valueOf(Jpassword.getPassword()).equals(archivo.readUTF().trim())) {
+                        archivo.close();
+                        return true;
+                    }
+                }
+                pos += 70;
+            }
+            archivo.close();
+        } catch (Exception e) {
+
+        }
+        return false;
     }
 
     /**
@@ -187,31 +233,15 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-   
-        String user = Jusuario.getText();
-        String pass = String.valueOf(Jpassword.getPassword());
-
-        for (Administrativo usuario : administrativos) {
-            if (usuario._id.equals(user) && usuario.obtenerContrasena().equals(pass)) {
-                InterfaceAdministrativo iadministrativo = new InterfaceAdministrativo(medicos, administrativos, pacientes, habitaciones);
-                iadministrativo.setSize(1000, 800);
-                iadministrativo.setVisible(true);
-                this.setVisible(false);
-                //login.setExtendedState(login.MAXIMIZED_BOTH);
-            }
+        if (verificarAdministrativo()) {
+            InterfaceAdministrativo aux = new InterfaceAdministrativo();
+            aux.setVisible(true);
+            this.setVisible(false);
+        } else if (verificarMedico()) {
+            InterfaceMedico aux = new InterfaceMedico(Jusuario.getText());
+            aux.setVisible(true);
+            this.setVisible(false);
         }
-        for (Medico usuario : medicos) {
-            if (usuario._id.equals(user) && usuario.obtenerContrasena().equals(pass)) {
-                InterfaceMedico imedico = new InterfaceMedico(medicos, administrativos, pacientes, habitaciones, usuario._id);
-                imedico.setSize(1000, 800);
-                imedico.setVisible(true);
-                this.setVisible(false);
-                //login.setExtendedState(login.MAXIMIZED_BOTH);
-            }
-        }
-        
-        jLabel3.setText("Datos no válidos");
-        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

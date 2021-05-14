@@ -102,17 +102,17 @@ public class Medico extends Persona {
             File arch = new File(raiz + "\\MEDICOS.dat");
             RandomAccessFile archivo = new RandomAccessFile(arch, "rw");
 
-            if (archivo.length() != 0) {                
+            if (archivo.length() != 0) {
                 archivo.seek(archivo.length());
             }                                       // TAMAÑO EN BYTES (incluido los 2 del writeUtf)
             archivo.writeUTF(_id);                  // 7
             archivo.writeUTF(_nombre);              // 22
             archivo.writeInt(_edad);                // 4
             archivo.writeChar(_genero);             // 1    2
-            archivo.writeUTF(especialidad);         // 22
+            archivo.writeUTF(especialidad);         // 23
             archivo.writeUTF(contrasena);           // 12
-            archivo.close();                        // TOTAL: 68 por registro
-            
+            archivo.close();                        // TOTAL: 70 por registro
+
         } catch (IOException e) {
             System.out.println("error en el ingreso");
         }

@@ -8,6 +8,7 @@ package hospital;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+
 /**
  *
  * @author alang
@@ -20,8 +21,9 @@ public class Administrativo extends Persona {
         super(id, nombre, edad, genero);
         this.contrasena = contrasena;
     }
-    public Administrativo(){
-        
+
+    public Administrativo() {
+
     }
 
     public String obtenerContrasena() {
@@ -36,7 +38,7 @@ public class Administrativo extends Persona {
         return "ID:" + _id + ";Nombre:" + _nombre + ";Edad:" + _edad
                 + ";Género:" + _genero + ";Contraseña:" + contrasena;
     }
-    
+
     public void guardar() {
         String raiz = System.getProperty("user.dir");
         try {
@@ -46,52 +48,43 @@ public class Administrativo extends Persona {
 
             if (archivo.length() != 0) {
                 archivo.seek(archivo.length());
-                archivo.writeUTF(_id);
-                archivo.writeUTF(_nombre);
-                archivo.writeInt(_edad);
-                archivo.writeChar(_genero);
-                archivo.writeUTF(contrasena);
-                archivo.close();
-            } else {
-                archivo.writeUTF(_id);
-                archivo.writeUTF(_nombre);
-                archivo.writeInt(_edad);
-                archivo.writeChar(_genero);
-                archivo.writeUTF(contrasena);
-                archivo.close();
+
             }
+            archivo.writeUTF(_id); //7 Bytes
+            archivo.writeUTF(_nombre); //27 Bytes
+            archivo.writeInt(_edad); //4 Bytes
+            archivo.writeChar(_genero); //2 Bytes
+            archivo.writeUTF(contrasena); //12 bYTES
+            archivo.close();
         } catch (IOException e) {
             System.out.println("Error en el ingreso");
         }
 
     }
-    
-    public void darFormato(){
-        if(_id.length() < 5){
-           for(int i = _id.length(); i < 5; i++){
-                _id +=" ";
+
+    public void darFormato() {
+        if (_id.length() < 5) {
+            for (int i = _id.length(); i < 5; i++) {
+                _id += " ";
             }
+        } else {
+            _id = _id.substring(0, 5);
         }
-        else {
-            _id = _id.substring(0,5);
-        }
-        
-        if(_nombre.length() < 25){
-           for(int i = _nombre.length(); i < 25; i++){
-                _nombre +=" ";
+
+        if (_nombre.length() < 25) {
+            for (int i = _nombre.length(); i < 25; i++) {
+                _nombre += " ";
             }
+        } else {
+            _nombre = _nombre.substring(0, 25);
         }
-        else {
-            _nombre = _nombre.substring(0,25);
-        }
-        
-        if(contrasena.length() < 10){
-           for(int i = contrasena.length(); i < 10; i++){
-                contrasena +=" ";
+
+        if (contrasena.length() < 10) {
+            for (int i = contrasena.length(); i < 10; i++) {
+                contrasena += " ";
             }
-        }
-        else {
-            contrasena = contrasena.substring(0,10);
+        } else {
+            contrasena = contrasena.substring(0, 10);
         }
     }
 }

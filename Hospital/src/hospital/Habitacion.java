@@ -132,7 +132,7 @@ public class Habitacion {
             }
             rand.writeUTF(codigo); //7 Bytes
             rand.writeInt(piso); //4 Bytes
-            rand.writeUTF(tipo); //7 Bytes
+            rand.writeUTF(tipo); //12 Bytes
             rand.writeUTF(pacienteID); //7 Bytes
             rand.writeBoolean(disponibilidad); //1 Byte
             rand.close();

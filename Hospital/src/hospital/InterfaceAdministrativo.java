@@ -33,43 +33,15 @@ import org.jfree.data.category.DefaultCategoryDataset;
  */
 public class InterfaceAdministrativo extends javax.swing.JFrame {
 
-    File pacientestxt;
-    ArrayList<Medico> medicos;
-    ArrayList<Administrativo> administrativos;
-    ArrayList<Paciente> pacientes;
-    ArrayList<Habitacion> habitaciones;
-
     // Constructores
     public InterfaceAdministrativo() {
         initComponents();
-        setLocationRelativeTo(null);
-        pacientestxt = new File("C:\\Users\\alang\\Documents\\NetBeansProjects\\PROYECTO HOSPITAL\\Hospital\\Pacientes.txt");
-    }
-
-    public InterfaceAdministrativo(ArrayList<Medico> medicos, ArrayList<Administrativo> administrativos, ArrayList<Paciente> pacientes, ArrayList<Habitacion> habitaciones) {
-        initComponents();
         jLabel19.setVisible(false);
         setLocationRelativeTo(null);
-        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
-        for (int i = model.getRowCount() - 1; i >= 0; i--) {
-            model.removeRow(i);
-        }
 
-        if (habitaciones.size() > 0) {
-            for (Habitacion hab : habitaciones) {
-                String[] elementos = hab.obtenerDatos();
-                model.insertRow(model.getRowCount(), new Object[]{elementos[0], elementos[1], elementos[2], elementos[3]});
-            }
-        }
-        this.medicos = medicos;
-        this.administrativos = administrativos;
-        this.pacientes = pacientes;
-        this.habitaciones = habitaciones;
-        pacientestxt = new File("C:\\Users\\alang\\Documents\\NetBeansProjects\\PROYECTO HOSPITAL\\Hospital\\Pacientes.txt");
+        inicializarTablaHabitaciones();
+        inicializarComboBoxMedicos();
 
-        for (Medico med : medicos) {
-            jComboBox4.addItem(med.obtenerNombre());
-        }
     }
 
     /**
@@ -949,7 +921,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
             String habCodigo;
             String medID;
             String fechaIngreso;
-            long tamRegistro = 99;
+            long tamRegistro = 150;
             long cregistros = 0;
             File arch = new File(raiz + "\\PACIENTES.dat");
             RandomAccessFile archivo = new RandomAccessFile(arch, "rw");
@@ -964,12 +936,14 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
                 medID = archivo.readUTF();
                 fechaIngreso = archivo.readUTF();
                 archivo.readUTF();
+                archivo.readUTF();
                 model.insertRow(model.getRowCount(), new Object[]{id, nombre, edad, genero, habCodigo, medID, fechaIngreso});
             }
-
+            archivo.close();
         } catch (Exception e) {
 
         }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
@@ -1013,13 +987,15 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
             String medID;
             String fechaIngreso;
             String fechaSalida;
-            long tamRegistro = 99;
+            long tamRegistro = 150;
             long cregistros = 0;
+            long pos = 0;
             File arch = new File(raiz + "\\PACIENTES.dat");
             RandomAccessFile archivo = new RandomAccessFile(arch, "rw");
             cregistros = archivo.length() / tamRegistro;
 
             for (int r = 0; r < cregistros; r++) {
+                archivo.seek(pos);
                 if (txtID.getText().equals(id = archivo.readUTF().trim())) {
                     nombre = archivo.readUTF();
                     edad = archivo.readInt();
@@ -1029,11 +1005,12 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
                     fechaIngreso = archivo.readUTF();
                     fechaSalida = archivo.readUTF();
                     model.insertRow(model.getRowCount(), new Object[]{id, nombre, edad, genero, habCodigo, medID, fechaIngreso});
-                } else {
-                    archivo.seek(99);
+                    break;
                 }
-            }
+                pos += 150;
 
+            }
+            archivo.close();
         } catch (Exception e) {
 
         }
@@ -1054,7 +1031,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
             String medID;
             String fechaIngreso;
             String fechaSalida;
-            long tamRegistro = 99;
+            long tamRegistro = 150;
             long cregistros = 0;
             File arch = new File(raiz + "\\PACIENTES.dat");
             RandomAccessFile archivo = new RandomAccessFile(arch, "rw");
@@ -1133,7 +1110,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
                             archivoHab.close();
                     }
                 }
-                pos += 99;
+                pos += 150;
             }
             archivo.close();
         } catch (Exception e) {
@@ -1158,15 +1135,131 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        Login aux = new Login(medicos, administrativos, pacientes, habitaciones);
+        Login aux = new Login();
         aux.setSize(700, 800);
         aux.setVisible(true);
-        Hospital.guardarEnArchivos();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
 
     }//GEN-LAST:event_txtNameActionPerformed
+    public void inicializarComboBoxMedicos() {
+        String raiz = System.getProperty("user.dir");
+
+        try {
+
+            String codigo;
+            long tamRegistro = 70, cregistros, pos = 0;
+            File arch = new File(raiz + "\\MEDICOS.dat");
+            RandomAccessFile archivo = new RandomAccessFile(arch, "rw");
+            cregistros = archivo.length() / tamRegistro;
+
+            for (int r = 0; r < cregistros; r++) {
+                archivo.seek(pos + 33);
+                if (archivo.readChar() == 'M') {
+                    archivo.seek(pos + 7);
+                    jComboBox4.addItem("Dr. " + archivo.readUTF());
+                } else {
+                    archivo.seek(pos + 7);
+                    jComboBox4.addItem("Dra. " + archivo.readUTF());
+                }
+                pos += 70;
+            }
+            archivo.close();
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    public boolean agregarPacienteHabitaciones(String codigoHab, String paciente) {
+        String raiz = System.getProperty("user.dir");
+
+        try {
+            System.out.println("ENTRO FUNCION");
+
+            String codigo;
+            long tamRegistro = 31, cregistros, pos = 0;
+            File arch = new File(raiz + "\\HABITACIONES.dat");
+            RandomAccessFile archivo = new RandomAccessFile(arch, "rw");
+            cregistros = archivo.length() / tamRegistro;
+
+            for (int r = 0; r < cregistros; r++) {
+                archivo.seek(pos);
+
+                if (codigoHab.equals(codigo = archivo.readUTF().trim())) {
+                    archivo.seek(pos + 30);
+                    if (archivo.readBoolean()) {
+                        archivo.seek(pos + 23);
+                        if (paciente.length() < 5) {
+                            for (int i = paciente.length(); i < 5; i++) {
+                                paciente += " ";
+                            }
+                        } else {
+                            paciente = paciente.substring(0, 5);
+                        }
+                        archivo.writeUTF(paciente);
+                        archivo.seek(pos + 30);
+                        archivo.writeBoolean(false);
+                        archivo.close();
+                        return true;
+                    }
+                }
+                pos += 31;
+            }
+            archivo.close();
+        } catch (Exception e) {
+
+        }
+
+        return false;
+    }
+
+    public void inicializarTablaHabitaciones() {
+        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+        model.setRowCount(0);
+        String raiz = System.getProperty("user.dir");
+
+        try {
+            String codigo, tipo;
+            int piso;
+            boolean disponibilidad;
+            long tamRegistro = 31;
+            long cregistros = 0;
+            File arch = new File(raiz + "\\HABITACIONES.dat");
+            RandomAccessFile archivo = new RandomAccessFile(arch, "rw");
+            cregistros = archivo.length() / tamRegistro;
+
+            for (int r = 0; r < cregistros; r++) {
+                codigo = archivo.readUTF(); //7 Bytes
+                piso = archivo.readInt(); //4 Bytes
+                tipo = archivo.readUTF(); //12 Bytes
+                archivo.readUTF();
+                disponibilidad = archivo.readBoolean(); //1Byte
+                model.insertRow(model.getRowCount(), new Object[]{codigo, piso, tipo, disponibilidad});
+            }
+            archivo.close();
+
+        } catch (Exception e) {
+
+        }
+    }
+
+    public String obtenerCodigoMedico(int indice) {
+        String raiz = System.getProperty("user.dir");
+
+        try {
+            File arch = new File(raiz + "\\MEDICOS.dat");
+            RandomAccessFile archivo = new RandomAccessFile(arch, "rw");
+
+            archivo.seek(indice * 70);
+            return archivo.readUTF();
+
+        } catch (Exception e) {
+
+        }
+        return "null_";
+    }
 
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -1174,54 +1267,27 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
 
         try {
 
-            int aux;
             String nombre = txtName.getText();
             int edad = Integer.parseInt(txtEdad.getText());
             String id = txtId.getText().trim();
 
-            for (Paciente var : pacientes) {
-                if (var.obtenerId().equals(id)) {
-                    throw new Exception();
-                }
-            }
-
             String habitacion = txtHab.getText();
             char genero = jComboBox3.getSelectedIndex() == 0 ? 'M' : 'F';
-            Medico medico = medicos.get(jComboBox4.getSelectedIndex());
 
-            aux = Integer.parseInt(habitacion.substring(2, habitacion.length())) - 1;
+            if (agregarPacienteHabitaciones(habitacion, id)) {
 
-            if (habitaciones.get(aux).obtenerDisponibilidad()) {
-                Paciente nuevoPaciente = new Paciente(id, nombre, edad, genero, medico, habitaciones.get(aux), LocalDateTime.now());
-                //FileWriter fr = new FileWriter("C:\\Users\\alang\\Documents\\NetBeansProjects\\PROYECTO HOSPITAL\\Hospital\\Pacientes.txt");
-                //fr.write(nuevoPaciente.obtenerDatosString());
-                //fr.close();
+                Paciente nuevoPaciente = new Paciente(id, nombre, edad, genero, obtenerCodigoMedico(jComboBox4.getSelectedIndex()), habitacion, LocalDateTime.now());
                 nuevoPaciente.guardar();
 
-                pacientes.add(nuevoPaciente);
-                habitaciones.get(aux).setearPaciente(nuevoPaciente);
                 lblHab.setText("");
                 JOptionPane.showMessageDialog(this, "Paciente agregado correctamente");
 
             } else {
-                lblHab.setText("Habitación ocupada");
                 JOptionPane.showMessageDialog(this, "Habitación ocupada");
             }
-
-            DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
-            for (int i = model.getRowCount() - 1; i >= 0; i--) {
-                model.removeRow(i);
-            }
-
-            if (habitaciones.size() > 0) {
-                for (Habitacion hab : habitaciones) {
-                    String[] elementos = hab.obtenerDatos();
-
-                    model.insertRow(model.getRowCount(), new Object[]{elementos[0], elementos[1], elementos[2], elementos[3]});
-                }
-            }
-
+            inicializarTablaHabitaciones();
         } catch (Exception e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Datos no válidos");
         }
 
@@ -1244,11 +1310,6 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         try {
-            for (Administrativo var : administrativos) {
-                if (var.obtenerId().equals(txtIDAdmin.getText())) {
-                    throw new Exception();
-                }
-            }
             jLabel19.setForeground(Color.GREEN);
             jLabel19.setText("Se ha ingresado el administrativo correctamente");
             if (jComboBox5.getSelectedIndex() == 0) {
@@ -1286,11 +1347,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         try {
-            for (Medico var : medicos) {
-                if (var.obtenerId().equals(txtIDAdmin1.getText())) {
-                    throw new Exception();
-                }
-            }
+            
             jLabel25.setForeground(Color.GREEN);
             jLabel25.setText("Se ha ingresado el médico correctamente");
             if (jComboBox6.getSelectedIndex() == 0) {
@@ -1331,56 +1388,6 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-
-        /*
-        try {
-            for (Habitacion var : habitaciones) {
-                if (var.obtenerCodigo().equals(txtCodigoHab.getText()) || txtCodigoHab.getText().equals("")) {
-                    throw new Exception();
-                }
-            }
-            /*
-            jLabel28.setForeground(Color.GREEN);
-            jLabel28.setText("Se ha ingresado la habitación correctamente");
-            switch (jComboBox8.getSelectedIndex()) {
-                case 0:
-                    habitaciones.add(new Habitacion(txtCodigoHab.getText(), 1, jComboBox9.getItemAt(jComboBox9.getSelectedIndex())));
-                    break;
-                case 1:
-                    habitaciones.add(new Habitacion(txtCodigoHab.getText(), 2, jComboBox9.getItemAt(jComboBox9.getSelectedIndex())));
-                    break;
-                case 2:
-                    habitaciones.add(new Habitacion(txtCodigoHab.getText(), 3, jComboBox9.getItemAt(jComboBox9.getSelectedIndex())));
-                    break;
-                case 3:
-                    habitaciones.add(new Habitacion(txtCodigoHab.getText(), 4, jComboBox9.getItemAt(jComboBox9.getSelectedIndex())));
-                    break;
-                case 4:
-                    habitaciones.add(new Habitacion(txtCodigoHab.getText(), 5, jComboBox9.getItemAt(jComboBox9.getSelectedIndex())));
-                    break;
-            }
-         */
- /*
-            FileWriter fr = new FileWriter("C:\\Users\\alang\\Documents\\NetBeansProjects\\PROYECTO HOSPITAL\\Hospital\\Pacientes.txt");
-            fr.write("Codigo:" + txtCodigoHab.getText() + ";Piso:" + 2 + ";Tipo:" + jComboBox9.getItemAt(jComboBox9.getSelectedIndex()) + "\n");
-            fr.close();
-            DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
-            for (int i = model.getRowCount() - 1; i >= 0; i--) {
-                model.removeRow(i);
-            }
-
-            if (habitaciones.size() > 0) {
-                for (Habitacion hab : habitaciones) {
-                    String[] elementos = hab.obtenerDatos();
-                    model.insertRow(model.getRowCount(), new Object[]{elementos[0], elementos[1], elementos[2], elementos[3]});
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            jLabel28.setForeground(Color.RED);
-            jLabel28.setText("Datos no válidos");
-        }
-         */
         Habitacion habitacion = new Habitacion();
         habitacion.setearCodigo(txtCodigoHab.getText());
         habitacion.setearDisponibilidad(true);  // se setea automaticamente en true porque no hay campo que reciba la disp
@@ -1398,16 +1405,14 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
 
             // Lectura de los registros en el archivo .dat
             int[] edades = new int[10];
-            final int REGISTRO_LENGTH = 99;
+            final int REGISTRO_LENGTH = 150;
             long cantidadRegistros = archivo.length() / REGISTRO_LENGTH;
             int posEdad = 29;
-            System.out.println(archivo.length());
             archivo.seek(posEdad);
             for (int i = 0; i < cantidadRegistros; i++) {
-                System.out.println(archivo.length());
                 edades[(int) archivo.readInt() / 10]++;
                 posEdad += 4;       // los 4 bytes que lee de la edad
-                posEdad += 95;     // los 99 - 4 bytes para leer la edad del siguiente registro
+                posEdad += 146;     // los 150 - 4 bytes para leer la edad del siguiente registro
                 archivo.seek(posEdad);
             }
 
@@ -1423,7 +1428,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
             ChartFrame frame = new ChartFrame("Diagrama de barras", chart);
             frame.setVisible(true);
             frame.setLocationRelativeTo(null);
-            frame.setSize(800, pacientes.size() * 60);
+            frame.setSize(800, 600);
 
         } catch (FileNotFoundException ex) {
             Logger.getLogger(InterfaceMedico.class
@@ -1454,7 +1459,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
             long cantidadRegistros = archivo.length() / REGISTRO_LENGTH;
             int posEspecialidad = 35;
             archivo.seek(posEspecialidad);
-            
+
             // sumar a cada indice del arreglo segun la especialidad del medico
             for (int i = 0; i < cantidadRegistros; i++) {
                 switch (archivo.readUTF().trim()) {
@@ -1505,7 +1510,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
             dataset.setValue(especialidades[6], "No. médicos", "Dermatología");
             dataset.setValue(especialidades[7], "No. médicos", "Geriatría");
             dataset.setValue(especialidades[8], "No. médicos", "Pediatría");
-            dataset.setValue(especialidades[9], "No. médicos", "Otra");           
+            dataset.setValue(especialidades[9], "No. médicos", "Otra");
 
             // crear bar chart (diagrama de barras) e imprimirlo
             JFreeChart chart = ChartFactory.createBarChart("Médicos por especialidades", "Especialidad", "No. médicos", dataset);
@@ -1517,9 +1522,12 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
             frame.setSize(1200, 800);
 
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(InterfaceMedico.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InterfaceMedico.class
+                    .getName()).log(Level.SEVERE, null, ex);
+
         } catch (IOException ex) {
-            Logger.getLogger(InterfaceMedico.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InterfaceMedico.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton8ActionPerformed
 

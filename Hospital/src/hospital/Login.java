@@ -113,6 +113,7 @@ public class Login extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(700, 800));
 
         jPanel2.setBackground(new java.awt.Color(105, 132, 140));
+        jPanel2.setForeground(new java.awt.Color(255, 51, 51));
         jPanel2.setPreferredSize(new java.awt.Dimension(700, 800));
 
         jp2.setBackground(new java.awt.Color(105, 132, 140));
@@ -241,6 +242,8 @@ public class Login extends javax.swing.JFrame {
             InterfaceMedico aux = new InterfaceMedico(Jusuario.getText());
             aux.setVisible(true);
             this.setVisible(false);
+        } else{
+            jLabel3.setText("Datos no válidos");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

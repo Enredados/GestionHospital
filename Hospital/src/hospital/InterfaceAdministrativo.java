@@ -188,11 +188,11 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Disponibilidad", "Piso", "Tipo"
+                "Código", "Piso", "Tipo", "Disponibilidad"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -200,6 +200,9 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
             }
         });
         jScrollPane3.setViewportView(jTable3);
+        if (jTable3.getColumnModel().getColumnCount() > 0) {
+            jTable3.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel13.setText("Habitaciones");
@@ -593,42 +596,40 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(67, 67, 67)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel22)
+                                .addComponent(jLabel20)
+                                .addComponent(jLabel24)
+                                .addComponent(jLabel26))
+                            .addGap(36, 36, 36)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtContrasenaAdmin1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtEdadAdmin1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel4Layout.createSequentialGroup()
                                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel22)
-                                        .addComponent(jLabel20)
-                                        .addComponent(jLabel24)
-                                        .addComponent(jLabel26))
-                                    .addGap(36, 36, 36)
+                                        .addComponent(txtNombreAdmin1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtIDAdmin1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(155, 155, 155)
                                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtContrasenaAdmin1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtEdadAdmin1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(jPanel4Layout.createSequentialGroup()
-                                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(txtNombreAdmin1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(txtIDAdmin1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGap(155, 155, 155)
-                                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(jPanel4Layout.createSequentialGroup()
-                                                    .addComponent(jLabel23)
-                                                    .addGap(26, 26, 26)
-                                                    .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGroup(jPanel4Layout.createSequentialGroup()
-                                                    .addComponent(jLabel21)
-                                                    .addGap(18, 18, 18)
-                                                    .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                                .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jButton6)
-                                .addGap(612, 612, 612))))
+                                            .addComponent(jLabel23)
+                                            .addGap(26, 26, 26)
+                                            .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel4Layout.createSequentialGroup()
+                                            .addComponent(jLabel21)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                    .addComponent(jButton8)
+                                    .addGap(157, 157, 157))))
+                        .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(342, 342, 342)
-                        .addComponent(jButton8)))
+                        .addComponent(jButton6)
+                        .addGap(612, 612, 612)))
                 .addContainerGap(168, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -658,10 +659,10 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton6)
                 .addGap(26, 26, 26)
-                .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(86, 86, 86)
-                .addComponent(jButton8)
-                .addContainerGap(122, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton8))
+                .addContainerGap(238, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Agregar Médico", jPanel4);
@@ -914,19 +915,16 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
 
         try {
 
-            String id;
-            String nombre;
+            String id, nombre, habCodigo, medID, fechaIngreso;
             int edad;
             char genero;
-            String habCodigo;
-            String medID;
-            String fechaIngreso;
             long tamRegistro = 150;
             long cregistros = 0;
             File arch = new File(raiz + "\\PACIENTES.dat");
             RandomAccessFile archivo = new RandomAccessFile(arch, "rw");
             cregistros = archivo.length() / tamRegistro;
             archivo.seek(0);
+          
             for (int r = 0; r < cregistros; r++) {
                 id = archivo.readUTF();
                 nombre = archivo.readUTF();
@@ -943,34 +941,13 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
         } catch (Exception e) {
 
         }
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIDActionPerformed
 
-    private String[] obtenerDatos() {
-
-        try (BufferedReader br = Files.newBufferedReader(Paths.get("C:\\Users\\alang\\Documents\\NetBeansProjects\\PROYECTO HOSPITAL\\Hospital\\Pacientes.txt"))) {
-
-            String lineas[];
-            String aux = "";
-            String datos[];
-
-            // read line by line
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                aux += linea + "\n";
-            }
-            lineas = aux.split("\n");
-            return lineas;
-
-        } catch (IOException e) {
-            System.err.format("IOException: %s%n", e);
-        }
-        return null;
-    }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:          
@@ -1281,7 +1258,6 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
 
                 lblHab.setText("");
                 JOptionPane.showMessageDialog(this, "Paciente agregado correctamente");
-
             } else {
                 JOptionPane.showMessageDialog(this, "Habitación ocupada");
             }
@@ -1347,7 +1323,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         try {
-            
+
             jLabel25.setForeground(Color.GREEN);
             jLabel25.setText("Se ha ingresado el médico correctamente");
             if (jComboBox6.getSelectedIndex() == 0) {
@@ -1361,6 +1337,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
                 aux.guardar();
                 jComboBox4.addItem("Dr. " + txtNombreAdmin1.getText());
             }
+            inicializarComboBoxMedicos();
             jLabel25.setVisible(true);
         } catch (Exception e) {
             jLabel25.setForeground(Color.red);
@@ -1394,7 +1371,7 @@ public class InterfaceAdministrativo extends javax.swing.JFrame {
         habitacion.setearTipo(jComboBox9.getSelectedItem().toString());
         habitacion.setearPiso(Integer.parseInt(jComboBox8.getSelectedItem().toString()));
         habitacion.guardar();
-
+        inicializarTablaHabitaciones();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void bt_estadistica_medicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_estadistica_medicoActionPerformed

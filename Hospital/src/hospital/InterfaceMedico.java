@@ -32,6 +32,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
  * @author bryan
  */
 public class InterfaceMedico extends javax.swing.JFrame {
+
     String idUsuario;
 
     /**
@@ -73,7 +74,6 @@ public class InterfaceMedico extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -174,13 +174,6 @@ public class InterfaceMedico extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setText("Dar de alta");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -199,10 +192,8 @@ public class InterfaceMedico extends javax.swing.JFrame {
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE)
                             .addComponent(jScrollPane3)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(273, 273, 273)
-                        .addComponent(jButton1)
-                        .addGap(123, 123, 123)
-                        .addComponent(jButton5)))
+                        .addGap(388, 388, 388)
+                        .addComponent(jButton1)))
                 .addContainerGap(117, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -221,9 +212,7 @@ public class InterfaceMedico extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton5))
+                .addComponent(jButton1)
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -301,24 +290,6 @@ public class InterfaceMedico extends javax.swing.JFrame {
         aux.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    //NOTA: ARREGLAR LA FORMA DE ELIMINAR ELEMENTOS DE LAS TABLAS
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-        /*Habitacion aux;
-        String id = JID.getText();
-        for (Paciente paciente : pacientes) {
-            if (paciente.obtenerId().equals(id) && paciente.obtenerMedico().obtenerId().equals(idUsuario)) {
-                aux = paciente.obtenerHabitacion();
-                paciente.setearHabitacion(new Habitacion());
-                paciente.borrarMedico();
-                aux.eliminarPaciente();
-                jTextDiagnostico.append("\n DADO DE ALTA: " + LocalDateTime.now());
-                JID.setText("");
-            }
-
-        }*/
-    }//GEN-LAST:event_jButton5ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         String raiz = System.getProperty("user.dir");
@@ -361,14 +332,9 @@ public class InterfaceMedico extends javax.swing.JFrame {
         String raiz = System.getProperty("user.dir");
 
         try {
-            String id;
-            String nombre;
+            String id, nombre, habCodigo, medID, fechaIngreso, fechaSalida;
             int edad;
             char genero;
-            String habCodigo;
-            String medID;
-            String fechaIngreso;
-            String fechaSalida;
             long tamRegistro = 150;
             long cregistros = 0;
             long pos = 0;
@@ -408,14 +374,9 @@ public class InterfaceMedico extends javax.swing.JFrame {
         model.setRowCount(0);
         String raiz = System.getProperty("user.dir");
         try {
-            String id;
-            String nombre;
+            String id, nombre, habCodigo, medID, fechaIngreso, fechaSalida;
             int edad;
             char genero;
-            String habCodigo;
-            String medID;
-            String fechaIngreso;
-            String fechaSalida;
             long tamRegistro = 150;
             long cregistros = 0;
             long pos = 0;
@@ -489,7 +450,6 @@ public class InterfaceMedico extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
